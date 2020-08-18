@@ -1,0 +1,93 @@
+/**
+ * Copyright (c) 2020 金电联行 All rights reserved.
+ *
+ * 3Golden Authorized Use
+ *
+ * 版权所有，侵权必究！
+ */
+
+package ${package}.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import ${main}.commons.mybatis.enums.DelFlagEnum;
+import ${main}.commons.mybatis.service.impl.CrudServiceImpl;
+import ${main}.commons.tools.enums.SuperAdminEnum;
+import ${main}.commons.tools.page.PageData;
+import ${main}.commons.tools.utils.ConvertUtils;
+import ${main}.commons.tools.constant.Constant;
+import ${main}.commons.tools.security.user.SecurityUser;
+import ${main}.commons.tools.security.user.UserDetail;
+import ${main}.commons.tools.utils.Result;
+import ${package}.dao.${className}Dao;
+import ${package}.dto.${className}DTO;
+import ${package}.entity.${className}Entity;
+import ${package}.service.${className}Service;
+import ${package}.feign.DeptFeignClient;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * ${commentsService}
+ *
+ * @author ${author} ${email}
+ * @since ${version} ${date}
+ */
+@Service
+public class ${className}ServiceImpl extends CrudServiceImpl<${className}Dao, ${className}Entity, ${className}DTO>
+        implements ${className}Service {
+    @Autowired
+    private DeptFeignClient deptFeignClient;
+
+    /**
+     * 查询分页-人工SQL
+     * @param params 查询条件
+     * @return PageData<${className}DTO>
+     */
+    @Override
+    public PageData<${className}DTO> queryPageBySql(Map<String, Object> params) {
+        //分页设置参数
+        Page<${className}Entity> page = (Page)getPage(params, Constant.UPDATE_DATE, false);
+
+        //普通管理员，只能查询所属部门及子部门的数据
+        UserDetail user = SecurityUser.getUser();
+        if(user.getSuperAdmin() == SuperAdminEnum.NO.value()) {
+            Result<List<Long>> deptFeignResult = deptFeignClient.getSubDeptIdList(user.getDeptId());
+            if(deptFeignResult.success()){
+                params.put("deptIdList", deptFeignResult.getData());
+            }else{
+                return null;
+            }
+        }
+
+        IPage<${className}DTO> list = baseDao.${variableClassName}List(page, params);
+        return getPageData(list, ${className}DTO.class);
+    }
+
+    @Override
+    public QueryWrapper<${className}Entity> getWrapper(Map<String, Object> params){
+        String id = (String)params.get("id");
+
+        QueryWrapper<${className}Entity> wrapper = new QueryWrapper<>();
+        wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+
+        return wrapper;
+    }
+
+    /**
+     * 查询数据列表
+     * @param params 查询条件
+     * @return List<${className}DTO>
+     */
+    @Override
+    public List<${className}DTO> ${variableClassName}List(Map<String, Object> params){
+        return baseDao.${variableClassName}List(params);
+    }
+
+}

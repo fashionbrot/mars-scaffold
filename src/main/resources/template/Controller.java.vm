@@ -1,0 +1,108 @@
+
+
+package ${package}.controller;
+
+import ${main}.commons.tools.page.PageData;
+import ${main}.commons.tools.utils.ExcelUtils;
+import ${main}.commons.tools.utils.Result;
+import ${main}.commons.tools.validator.AssertUtils;
+import ${main}.commons.tools.validator.ValidatorUtils;
+import ${main}.commons.tools.validator.group.AddGroup;
+import ${main}.commons.tools.validator.group.UpdateGroup;
+import ${main}.commons.tools.validator.group.DefaultGroup;
+import ${package}.dto.${className}DTO;
+import ${package}.excel.${className}Excel;
+import ${package}.service.${className}Service;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import com.github.xiaoymin.knife4j.annotations.ApiSort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
+
+
+/**
+ * ${commentsController}
+ *
+ * @author ${author} ${email}
+ * @since ${version} ${date}
+ */
+@RestController
+@RequestMapping("${pathName}")
+@Api(tags="${commentsApi}")
+@ApiSort(${apiSort})
+public class ${className}Controller {
+    @Autowired
+    private ${className}Service ${variableClassName}Service;
+
+    @GetMapping("page")
+    @ApiOperation("数据列表—分页")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
+        @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
+        @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
+        @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
+    })
+    public Result<PageData<${className}DTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
+        PageData<${className}DTO> page = ${variableClassName}Service.page(params);
+
+        return new Result<PageData<${className}DTO>>().ok(page);
+    }
+
+    @GetMapping("{id}")
+    @ApiOperation("查看-详情")
+    public Result<${className}DTO> get(@PathVariable("id") Long id){
+        ${className}DTO data = ${variableClassName}Service.get(id);
+
+        return new Result<${className}DTO>().ok(data);
+    }
+
+    @PostMapping
+    @ApiOperation("新增-保存")
+    public Result save(@RequestBody ${className}DTO dto){
+        //效验数据
+        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+
+        ${variableClassName}Service.save(dto);
+
+        return new Result();
+    }
+
+    @PutMapping
+    @ApiOperation("编辑-修改")
+    public Result update(@RequestBody ${className}DTO dto){
+        //效验数据
+        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
+
+        ${variableClassName}Service.update(dto);
+
+        return new Result();
+    }
+
+    @DeleteMapping
+    @ApiOperation("删除/批量删除")
+    public Result delete(@RequestBody Long[] ids){
+        //效验数据
+        AssertUtils.isArrayEmpty(ids, "id");
+
+        ${variableClassName}Service.delete(ids);
+
+        return new Result();
+    }
+
+    @GetMapping("export")
+    @ApiOperation("Excel数据导出")
+    public void export(@ApiIgnore @RequestParam Map<String, Object> params, HttpServletResponse response) throws Exception {
+        List<${className}DTO> list = ${variableClassName}Service.list(params);
+
+        ExcelUtils.exportExcelToTarget(response, null, list, ${className}Excel.class);
+    }
+
+}

@@ -1,0 +1,38 @@
+/**
+ * Copyright (c) 2020 金电联行 All rights reserved.
+ *
+ * 3Golden Authorized Use
+ *
+ * 版权所有，侵权必究！
+ */
+
+package ${package}.redis;
+
+import ${main}.commons.tools.redis.RedisUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/**
+ * ${commentsEntity}
+ *
+ * @author ${author} ${email}
+ * @since ${version} ${date}
+ */
+@Component
+public class ${className}Redis {
+    @Autowired
+    private RedisUtils redisUtils;
+
+    public void delete(Object[] ids) {
+
+    }
+
+    public void set(){
+
+    }
+
+    public String get(String id){
+        return null;
+    }
+
+}

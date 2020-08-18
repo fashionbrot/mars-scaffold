@@ -1,0 +1,45 @@
+/**
+ * Copyright (c) 2020 金电联行 All rights reserved.
+ *
+ * 3Golden Authorized Use
+ *
+ * 版权所有，侵权必究！
+ */
+
+package ${package}.entity;
+
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+import ${main}.commons.mybatis.entity.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+import java.util.Date;
+
+/**
+ * ${commentsEntity}
+ *
+ * @author ${author} ${email}
+ * @since ${version} ${date}
+ */
+@Data
+@EqualsAndHashCode(callSuper=false)
+@TableName("${tableName}")
+public class ${className}Entity extends BaseEntity {
+	private static final long serialVersionUID = 1L;
+
+#foreach ($column in $columns)
+#if($column.columnName != 'ID' && $column.columnName != 'DEL_FLAG' && $column.columnName != 'CREATOR' && $column.columnName != 'CREATE_DATE' && $column.columnName != 'UPDATER' && $column.columnName != 'UPDATE_DATE')
+	/**
+     * $column.comments
+     */
+	private $column.attrType $column.variableAttrName;
+#end
+#end
+}
