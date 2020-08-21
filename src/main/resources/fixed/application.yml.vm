@@ -1,0 +1,28 @@
+spring:
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    http:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+    thymeleaf:
+      cache: false
+      enabled: true
+      encoding: UTF-8
+      mode: LEGACYHTML5
+      prefix: classpath:/templates/
+      servlet:
+        content-type: text/html
+      suffix: .html
+
+pagehelper:
+  helper-dialect: mysql
+  params: count=countSql
+  reasonable: true
+  support-methods-arguments: true
+
+mybatis-plus:
+  mapper-locations: classpath*:${package2}/mapper/xml/*.xml
+  type-aliases-package: ${package2}.entity

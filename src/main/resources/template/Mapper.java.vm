@@ -1,0 +1,32 @@
+
+package ${package}.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import ${package}.entity.${className}Entity;
+import ${package}.dto.${className}DTO;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * ${commentsEntity}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${date}
+ */
+@Mapper
+public interface ${className}Mapper extends BaseMapper<${className}Entity> {
+    /**
+     * 查询数据列表
+     * @param params 查询条件
+     * @return List<${className}DTO>
+     */
+    List<${className}DTO> ${variableClassName}List(@Param("params") Map<String, Object> params);
+
+
+}

@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2020 金电联行 All rights reserved.
- *
- * 3Golden Authorized Use
- *
- * 版权所有，侵权必究！
- */
-
 package ${package}.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -13,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import ${main}.commons.mybatis.entity.BaseEntity;
+import ${package}.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,8 +17,9 @@ import java.util.Date;
 /**
  * ${commentsEntity}
  *
- * @author ${author} ${email}
- * @since ${version} ${date}
+ * @author ${author}
+ * @email ${email}
+ * @date ${date}
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
@@ -35,7 +28,12 @@ public class ${className}Entity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
-#if($column.columnName != 'ID' && $column.columnName != 'DEL_FLAG' && $column.columnName != 'CREATOR' && $column.columnName != 'CREATE_DATE' && $column.columnName != 'UPDATER' && $column.columnName != 'UPDATE_DATE')
+#if($column.columnName != 'ID' && $column.columnName != 'id'
+	&& $column.columnName != 'DEL_FLAG' &&  $column.columnName != 'del_flag'
+	&& $column.columnName != 'CREATE_ID'  && $column.columnName != 'create_id'
+	&& $column.columnName != 'CREATE_DATE'&& $column.columnName != 'create_date'
+	&& $column.columnName != 'UPDATE_ID' && $column.columnName != 'update_id'
+	&& $column.columnName != 'UPDATE_DATE'&& $column.columnName != 'update_date')
 	/**
      * $column.comments
      */

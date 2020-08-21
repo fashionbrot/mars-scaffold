@@ -4,9 +4,7 @@ import com.github.fashionbrot.scaffold.entity.ColumnEntity;
 import com.github.fashionbrot.scaffold.entity.TableEntity;
 import com.github.fashionbrot.scaffold.exception.ScaffoldException;
 import com.github.fashionbrot.scaffold.req.CodeReq;
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
@@ -25,6 +23,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Component
+@Slf4j
 public class ScaffoldUtil {
 
     @Autowired
@@ -33,20 +32,67 @@ public class ScaffoldUtil {
     public static List<String> getTemplates(){
         List<String> templates = new ArrayList<>();
         templates.add("template/Entity.java.vm");
-        templates.add("template/Dao.java.vm");
-        templates.add("template/Dao.xml.vm");
+        templates.add("template/Mapper.java.vm");
+        templates.add("template/Mapper.xml.vm");
         templates.add("template/Service.java.vm");
         templates.add("template/ServiceImpl.java.vm");
         templates.add("template/Controller.java.vm");
-        templates.add("template/Excel.java.vm");
-        templates.add("template/Redis.java.vm");
         templates.add("template/DTO.java.vm");
+        templates.add("template/Req.java.vm");
         return templates;
+    }
+
+    /**
+     * key 是 path
+     * value 是vm 模板
+     * @return
+     */
+    public  Map<String,String> getFixedTemplates(){
+        String packagePath = getPackagePath();
+        String projectName = config.getProperty("projectName");
+        Map<String,String> map=new HashMap<>();
+        map.put(packagePath+File.separator+"entity"+File.separator+"BaseEntity.java","fixed/BaseEntity.java.vm");
+        map.put(packagePath+File.separator+"service"+File.separator+"BaseService.java","fixed/BaseService.java.vm");
+        map.put(packagePath+File.separator+"service"+File.separator+"impl"+File.separator+"BaseServiceImpl.java","fixed/BaseServiceImpl.java.vm");
+        map.put(packagePath+File.separator+"config"+File.separator+"GlobalExceptionHandler.java","fixed/config/GlobalExceptionHandler.java.vm");
+        map.put(packagePath+File.separator+"consts"+File.separator+"GlobalConst.java","fixed/consts/GlobalConst.java.vm");
+        map.put(packagePath+File.separator+"enums"+File.separator+"RespCode.java","fixed/enums/RespCode.java.vm");
+        map.put(packagePath+File.separator+"exception"+File.separator+"CurdException.java","fixed/exception/CurdException.java.vm");
+        map.put(packagePath+File.separator+"vo"+File.separator+"RespVo.java","fixed/vo/RespVo.java.vm");
+        map.put(packagePath+File.separator+"vo"+File.separator+"PageVo.java","fixed/vo/PageVo.java.vm");
+        map.put(packagePath+File.separator+"util"+File.separator+"ConvertUtils.java","fixed/util/ConvertUtils.java.vm");
+        map.put(packagePath+File.separator+"req"+File.separator+"PageReq.java","fixed/req/PageReq.java.vm");
+
+
+        map.put(packagePath+File.separator+projectName+"Application.java","fixed/Application.java.vm");
+        map.put(projectName+File.separator+"pom.xml","fixed/pom.xml.vm");
+
+        String resource =getResource();
+        map.put(resource+File.separator+"application.properties","fixed/application.properties.vm");
+        map.put(resource+File.separator+"application.yml","fixed/application.yml.vm");
+        return map;
+    }
+
+    public String getPackagePath(){
+        String projectName = config.getProperty("projectName");
+        String packageName = config.getProperty("package");
+        String moduleName = config.getProperty("moduleName");
+        String packagePath =projectName+File.separator+"src"+File.separator+ "main" + File.separator + "java" + File.separator;
+        if (StringUtils.isNotBlank(packageName)) {
+            packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
+        }
+        return  packagePath;
+    }
+
+    public String getResource(){
+        String projectName = config.getProperty("projectName");
+        String packageName = config.getProperty("package");
+        return projectName+File.separator+"src"+File.separator+ "main" + File.separator + "resources";
     }
 
 
 
-    public  void generator(CodeReq req,TableEntity tableEntity, List<ColumnEntity> columns, ZipOutputStream zip){
+    public  void generator(CodeReq req,TableEntity tableEntity, List<ColumnEntity> columns, ZipOutputStream zip, Flag flag){
 
         boolean hasBigDecimal = false;
         //表名转换成Java类名
@@ -91,37 +137,39 @@ public class ScaffoldUtil {
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
 
-        String main = config.getProperty("main" );
-        main = StringUtils.isBlank(main) ? config.getProperty("package" ) : main;
+/*        String main = config.getProperty("main" );
+
+        main = StringUtils.isBlank(main) ? config.getProperty("package" ) : main;*/
 
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
-        map.put("tableName", tableEntity.getTableName());
+        map.put("tableName", tableEntity.getTableName().replaceAll(req.getExcludePrefix(),""));
         // 处理注释
         if(StringUtils.isNotBlank(tableEntity.getComments())){
-            map.put("comments", tableEntity.getComments().replace("表","信息"));
-            map.put("commentsEntity", tableEntity.getComments().replace("表","信息实体"));
-            map.put("commentsService", tableEntity.getComments().replace("表","信息服务层"));
-            map.put("commentsController", tableEntity.getComments().replace("表","信息控制层"));
-            map.put("commentsApi", tableEntity.getComments().replace("表","信息接口"));
-            map.put("commentsDao", tableEntity.getComments().replace("表","信息数据层"));
+            map.put("comments", tableEntity.getComments());
+            map.put("commentsEntity", tableEntity.getComments());
+            map.put("commentsService", tableEntity.getComments());
+            map.put("commentsController", tableEntity.getComments());
+            map.put("commentsApi", tableEntity.getComments());
+            map.put("commentsDao", tableEntity.getComments());
         }
         map.put("pk", tableEntity.getPrimaryKeyColumnEntity());
         map.put("className", tableEntity.getClassName());
         map.put("variableClassName", tableEntity.getVariableClassName());
         map.put("columns", tableEntity.getColumns());
         map.put("hasBigDecimal", hasBigDecimal);
-        map.put("main", main);
+       /* map.put("main", main);*/
         // API接口排序
         if(tableEntity.getCreateTime()!= null){
             map.put("apiSort", StringUtils.substring(String.valueOf(tableEntity.getCreateTime().getTime() + System.currentTimeMillis()), 1, 9));
         }
 
         String moduleName = config.getProperty("moduleName" );
+        String packagePath = req.getPackagePath();
         if(StringUtils.isNotBlank(moduleName)){
-            map.put("package", config.getProperty("package" ) + "." + moduleName);
+            map.put("package", packagePath + "." + moduleName);
         }else {
-            map.put("package", config.getProperty("package" ));
+            map.put("package", packagePath);
         }
         if(StringUtils.isNotBlank(tableEntity.getTableName())){
             String tableName = StringUtils.lowerCase(tableEntity.getTableName());
@@ -138,25 +186,64 @@ public class ScaffoldUtil {
         map.put("email", req.getEmail());
         map.put("datetime", DateUtil.format(new Date(), DateUtil.DATE_TIME_PATTERN));
         map.put("date", DateUtil.format(new Date(), DateUtil.DATE_PATTERN));
+        map.put("projectName",config.getProperty("projectName"));
+        map.put("package2",map.get("package").toString().replace(".",File.separator));
         VelocityContext context = new VelocityContext(map);
 
         //获取模板列表
         List<String> templates = getTemplates();
-        for(String template : templates){
+        Map<String,String> mapTemplate = getFixedTemplates();
+        try {
+            generateTemplate(tableEntity, zip, context, templates);
+
+            if(flag.isFlag()==false) {
+                generateTemplate( zip, context, mapTemplate);
+                flag.setFlag(true);
+            }
+        } catch (IOException e) {
+            log.error("error:",e);
+            throw new ScaffoldException("渲染模板失败，表名：" + tableEntity.getTableName());
+        }
+
+    }
+
+    private void generateTemplate( ZipOutputStream zip, VelocityContext context,Map<String,String> map ) throws IOException {
+        Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<String, String> m = iterator.next();
+            //vm 模板
+            String template=m.getValue();
+            //vm 模板对应的path
+            String path = m.getKey();
             //渲染模板
             StringWriter sw = new StringWriter();
             Template tpl = Velocity.getTemplate(template, "UTF-8");
             tpl.merge(context, sw);
+            //添加到zip
+            log.info("generateTemplate path:{}",path);
+            ZipEntry zipEntry = new ZipEntry(path);
+            zip.putNextEntry(zipEntry);
+            IOUtils.write(sw.toString(), zip, "UTF-8");
+            IOUtils.closeQuietly(sw);
+            zip.closeEntry();
+        }
+    }
 
-            try {
-                //添加到zip
-                zip.putNextEntry(new ZipEntry(getFileName(template, tableEntity.getClassName(), config.getProperty("package"), config.getProperty("moduleName"))));
-                IOUtils.write(sw.toString(), zip, "UTF-8");
-                IOUtils.closeQuietly(sw);
-                zip.closeEntry();
-            } catch (IOException e) {
-                throw new ScaffoldException("渲染模板失败，表名：" + tableEntity.getTableName());
-            }
+    private void generateTemplate(TableEntity tableEntity, ZipOutputStream zip, VelocityContext context, List<String> templates) throws IOException {
+        for(String template : templates){
+            log.info("template:{}",template);
+            //渲染模板
+            StringWriter sw = new StringWriter();
+            Template tpl = Velocity.getTemplate(template, "UTF-8");
+            tpl.merge(context, sw);
+            //添加到zip
+            String fileName =getFileName(template, tableEntity.getClassName(), config.getProperty("package"), config.getProperty("moduleName"));
+            ZipEntry zipEntry = new ZipEntry(fileName);
+
+            zip.putNextEntry(zipEntry);
+            IOUtils.write(sw.toString(), zip, "UTF-8");
+            IOUtils.closeQuietly(sw);
+            zip.closeEntry();
         }
     }
 
@@ -181,28 +268,23 @@ public class ScaffoldUtil {
     /**
      * 获取文件名
      */
-    public static String getFileName(String template, String className, String packageName, String moduleName) {
-        String packagePath = "main" + File.separator + "java" + File.separator;
-        if (StringUtils.isNotBlank(packageName)) {
-            packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
-        }
+    public  String getFileName(String template, String className, String packageName, String moduleName) {
+        String packagePath =getPackagePath();
 
         if (template.contains("Entity.java.vm" )) {
             return packagePath + "entity" + File.separator + className + "Entity.java";
         }
-
-        if (template.contains("Excel.java.vm" )) {
-            return packagePath + "excel" + File.separator + className + "Excel.java";
+        if (template.contains("Req.java.vm" )) {
+            return packagePath + "req" + File.separator + className + "Req.java";
         }
 
-        if (template.contains("Dao.java.vm" )) {
-            return packagePath + "dao" + File.separator + className + "Dao.java";
+        if (template.contains("Mapper.java.vm" )) {
+            return packagePath + "mapper" + File.separator + className + "Mapper.java";
         }
 
-        if (template.contains("Service.java.vm" )) {
+        if (template.contains("Service.java.vm" ) ) {
             return packagePath + "service" + File.separator + className + "Service.java";
         }
-
         if (template.contains("ServiceImpl.java.vm" )) {
             return packagePath + "service" + File.separator + "impl" + File.separator + className + "ServiceImpl.java";
         }
@@ -210,19 +292,12 @@ public class ScaffoldUtil {
         if (template.contains("Controller.java.vm" )) {
             return packagePath + "controller" + File.separator + className + "Controller.java";
         }
-
-        if (template.contains("Redis.java.vm" )) {
-            return packagePath + "redis" + File.separator + className + "Redis.java";
-        }
-
         if (template.contains("DTO.java.vm" )) {
-            return moduleName + File.separator + "dto" + File.separator + className + "DTO.java";
+            return packagePath + File.separator + "dto" + File.separator + className + "DTO.java";
         }
-
-        if (template.contains("Dao.xml.vm" )) {
-            return "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + className + "Dao.xml";
+        if (template.contains("Mapper.xml.vm" )) {
+            return packagePath + File.separator + "mapper" + File.separator + "xml" + File.separator + className + "Mapper.xml";
         }
-
 
         return null;
     }

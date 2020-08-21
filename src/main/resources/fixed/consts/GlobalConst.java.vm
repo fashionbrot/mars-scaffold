@@ -1,0 +1,9 @@
+package ${package}.consts;
+
+import ${package}.vo.RespVo;
+
+public class GlobalConst {
+
+    public final static RespVo RESP_VO = RespVo.builder().code(RespVo.SUCCESS).msg("成功").build();
+
+}

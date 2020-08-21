@@ -1,0 +1,27 @@
+package ${package}.enums;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public enum RespCode {
+
+    SUCCESS(0, "成功"),
+    FAIL(1,"网络繁忙，请稍后重试"),
+    SAVE_ERROR(100,"保存失败,请稍后再试"),
+    UPDATE_ERROR(101,"更新失败,请稍后再试"),
+    DELETE_ERROR(102,"删除失败,请稍后再试"),
+    ;
+
+    private int code;
+    private String msg;
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("RespCode:[").append(code).append(":").append(msg).append("]");
+        return sb.toString();
+    }
+}

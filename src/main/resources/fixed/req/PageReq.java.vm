@@ -1,0 +1,16 @@
+package ${package}.req;
+
+import lombok.Data;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@Data
+@ApiModel(value = "分页req")
+public class PageReq {
+
+    @ApiModelProperty(value = "当前页码n")
+    private int start;
+
+    @ApiModelProperty(value = "每页条数")
+    private int length;
+}

@@ -79,6 +79,21 @@ function code() {
         return false;
     }
     window.location.href="./scaffold/code?tables="+tables;
+    /*loading();
+    $.ajax({
+        url: "./scaffold/code",
+        type: "post",
+        data: {"tables": tables},
+        dataType: "json",
+        success: function (data) {
+            loaded();
+
+        },error: function (data) {
+            if (data.code==-1){
+                alert(data.msg);
+            }
+        }
+    });*/
 }
 
 function loadData() {

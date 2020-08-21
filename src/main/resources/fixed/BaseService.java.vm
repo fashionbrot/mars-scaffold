@@ -1,0 +1,125 @@
+package ${package}.service;
+
+
+import ${package}.dto.${className}DTO;
+import ${package}.entity.${className}Entity;
+import ${package}.vo.RespVo;
+import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.apache.ibatis.session.SqlSession;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.io.Serializable;
+
+/**
+ * ${commentsEntity}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${date}
+ */
+
+public  interface BaseService <T,D> {
+
+
+    /**
+     * <p>
+     * 插入一条记录（选择字段，策略插入）
+     * </p>
+     *
+     * @param entity 实体对象
+     */
+    void insert(T entity);
+
+    /**
+     * <p>
+     * 插入（批量），该方法不支持 Oracle、SQL Server
+     * </p>
+     *
+     * @param entityList 实体对象集合
+     */
+    boolean insertBatch(Collection<T> entityList);
+
+    /**
+     * <p>
+     * 插入（批量）
+     * </p>
+     *
+     * @param entityList 实体对象集合
+     * @param batchSize  插入批次数量
+     */
+    boolean insertBatch(Collection<T> entityList, int batchSize);
+
+    /**
+     * <p>
+     * 根据 ID 选择修改
+     * </p>
+     *
+     * @param entity 实体对象
+     */
+    void updateById(T entity);
+
+    /**
+     * <p>
+     * 根据 whereEntity 条件，更新记录
+     * </p>
+     *
+     * @param entity        实体对象
+     * @param updateWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper}
+     */
+    void update(T entity, Wrapper<T> updateWrapper);
+
+    /**
+     * <p>
+     * 根据ID 批量更新
+     * </p>
+     *
+     * @param entityList 实体对象集合
+     */
+    boolean updateBatchById(Collection<T> entityList);
+
+    /**
+     * <p>
+     * 根据ID 批量更新
+     * </p>
+     *
+     * @param entityList 实体对象集合
+     * @param batchSize  更新批次数量
+     */
+    boolean updateBatchById(Collection<T> entityList, int batchSize);
+
+    /**
+     * <p>
+     * 根据 ID 查询
+     * </p>
+     *
+     * @param id 主键ID
+     */
+    T selectById(Serializable id);
+
+    /**
+     * <p>
+     * 根据 ID 删除
+     * </p>
+     *
+     * @param id 主键ID
+     */
+    void deleteById(Serializable id);
+
+    /**
+     * <p>
+     * 删除（根据ID 批量删除）
+     * </p>
+     *
+     * @param idList 主键ID列表
+     */
+    void deleteBatchIds(Collection<? extends Serializable> idList);
+
+
+}

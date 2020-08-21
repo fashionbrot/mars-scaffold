@@ -1,38 +1,35 @@
-/**
- * Copyright (c) 2020 金电联行 All rights reserved.
- *
- * 3Golden Authorized Use
- *
- * 版权所有，侵权必究！
- */
-
 package ${package}.service;
 
-import ${main}.commons.mybatis.service.CrudService;
-import ${main}.commons.tools.page.PageData;
 import ${package}.dto.${className}DTO;
 import ${package}.entity.${className}Entity;
+import ${package}.req.${className}Req;
+import ${package}.vo.PageVo;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * ${commentsService}
+ * ${commentsEntity}
  *
- * @author ${author} ${email}
- * @since ${version} ${date}
+ * @author ${author}
+ * @email ${email}
+ * @date ${date}
  */
-public interface ${className}Service extends CrudService<${className}Entity, ${className}DTO> {
-    /**
-     * 查询分页-人工SQL
-     * @param params 查询条件
-     * @return PageData<${className}DTO>
-     */
-    PageData<${className}DTO> queryPageBySql(Map<String, Object> params);
+public interface ${className}Service extends BaseService<${className}Entity,${className}DTO>  {
+
+
     /**
      * 查询数据列表
      * @param params 查询条件
      * @return List<${className}DTO>
      */
     List<${className}DTO> ${variableClassName}List(Map<String, Object> params);
+
+    /**
+     * 分页查询
+     * @param req
+     * @return PageVo
+     */
+    PageVo pageList(${className}Req req);
+
 }

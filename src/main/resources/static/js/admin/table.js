@@ -61,9 +61,16 @@ $(document).ready(function () {
         }
     });
 
-
+$("#swaggerStatus").on("click",function (){
+    if (this.checked) {
+        $("#swaggerStatus").val("1");
+    }else{
+        $("#swaggerStatus").val("0");
+    }
+})
 
 });
+
 
 function code() {
     var tables ="";
@@ -78,7 +85,29 @@ function code() {
         alert("请选择")
         return false;
     }
-    window.location.href="./scaffold/code?tables="+tables;
+    var packagePath = $("#packagePath").val();
+    var excludePrefix = $("#excludePrefix").val();
+    var author =$("#author").val();
+    var version =$("#version").val();
+    var email=$("#email").val();
+    var swaggerStatus=$("#swaggerStatus").val();
+    window.location.href="./scaffold/code?tables="+tables+"&packagePath="+packagePath+"&excludePrefix="+excludePrefix
+    +"&author="+author+"&version="+version+"&email="+email+"&swaggerStatus="+swaggerStatus;
+    /*loading();
+    $.ajax({
+        url: "./scaffold/code",
+        type: "post",
+        data: {"tables": tables},
+        dataType: "json",
+        success: function (data) {
+            loaded();
+
+        },error: function (data) {
+            if (data.code==-1){
+                alert(data.msg);
+            }
+        }
+    });*/
 }
 
 function loadData() {
