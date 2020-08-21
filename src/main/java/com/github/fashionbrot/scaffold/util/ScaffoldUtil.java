@@ -3,6 +3,7 @@ package com.github.fashionbrot.scaffold.util;
 import com.github.fashionbrot.scaffold.entity.ColumnEntity;
 import com.github.fashionbrot.scaffold.entity.TableEntity;
 import com.github.fashionbrot.scaffold.exception.ScaffoldException;
+import com.github.fashionbrot.scaffold.req.CodeReq;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -45,7 +46,7 @@ public class ScaffoldUtil {
 
 
 
-    public  void generator(TableEntity tableEntity, List<ColumnEntity> columns, ZipOutputStream zip){
+    public  void generator(CodeReq req,TableEntity tableEntity, List<ColumnEntity> columns, ZipOutputStream zip){
 
         boolean hasBigDecimal = false;
         //表名转换成Java类名
@@ -132,9 +133,9 @@ public class ScaffoldUtil {
             map.put("vueFileName", className.toLowerCase());
         }
         map.put("moduleName", config.getProperty("moduleName" ));
-        map.put("author", config.getProperty("author"));
-        map.put("version", config.getProperty("version"));
-        map.put("email", config.getProperty("email"));
+        map.put("author", req.getAuthor());
+        map.put("version", req.getVersion());
+        map.put("email", req.getEmail());
         map.put("datetime", DateUtil.format(new Date(), DateUtil.DATE_TIME_PATTERN));
         map.put("date", DateUtil.format(new Date(), DateUtil.DATE_PATTERN));
         VelocityContext context = new VelocityContext(map);

@@ -43,20 +43,31 @@
                             </div>
                         </div>
                         <div class="panel-heading" style="float: right;">
-                            <div class="pull-right" style="margin-right: 5rem;">
+                            <div class="btn-group" style="width: 600px" >&nbsp;
+                                包名：<input id="packagePath" type="text" style="width:150px;display:inline" class="form-control" placeholder="请输入包名" />
+                                剔除表名前缀：<input id="excludePrefix" type="text" style="width:150px;display:inline" class="form-control" placeholder="表名前缀" />
+                                是否使用swagger：<input type="checkbox"  id="swaggerStatus" />
+                                </br>
+                                作者：<input id="author" type="text" style="width:150px;display:inline" class="form-control" placeholder="请输入注释的作者名称"  />
+                                版本：<input id="version" type="text" style="width:150px;display:inline"  class="form-control" placeholder="请输入注释的版本"  />
+                                邮箱：<input id="email" type="text" style="width:150px;display:inline" class="form-control" placeholder="请输入注释的邮箱" />
+                            </div>
+
+
+
+                            <div class="pull-right" style="margin-right: 1rem;">
                                 <div class="btn-group" style="width: 20px" >&nbsp;</div>
+                                全选：<input type="checkbox"  id="checkAll" />
+                                <input id="tableName" type="text" style="width: 150px;display: inline" class="form-control" placeholder="请输入要查询的表名" />
+                                <button type="button" class="btn btn-success dropdown-toggle"
+                                        onclick="loadData()">
 
-                                <div class="btn-group" style="width: 80px" >&nbsp;
-                                    全选：<input type="checkbox"  id="checkAll" />
-                                </div>
-
+                                    <span class="glyphicon glyphicon-search"></span>查询
+                                </button>
                                 <div class="btn-group">
 
-                                    <input id="tableName" type="text" class="btn  dropdown-toggle" />
-                                    <button type="button" class="btn btn-success dropdown-toggle"
-                                            onclick="loadData()">
-                                        <span class="glyphicon glyphicon-search"></span>查询
-                                    </button>
+
+
                                 </div>
                                 <div class="btn-group">
 

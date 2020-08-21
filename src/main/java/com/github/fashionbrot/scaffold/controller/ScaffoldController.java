@@ -1,6 +1,7 @@
 package com.github.fashionbrot.scaffold.controller;
 
 import com.github.fashionbrot.scaffold.entity.ColumnEntity;
+import com.github.fashionbrot.scaffold.req.CodeReq;
 import com.github.fashionbrot.scaffold.req.PageReq;
 import com.github.fashionbrot.scaffold.service.ScaffoldService;
 import com.github.fashionbrot.scaffold.vo.PageVo;
@@ -60,8 +61,8 @@ public class ScaffoldController {
      * 生成代码
      */
     @RequestMapping("/code")
-    public void code(String tables, HttpServletResponse response) throws IOException {
-        byte[] data = scaffoldService.generatorCode(tables.split(","));
+    public void code(CodeReq req, HttpServletResponse response) throws IOException {
+        byte[] data = scaffoldService.generatorCode( req);
 
         response.reset();
         response.setHeader("Content-Disposition", ("attachment; filename=\"scaffold-"+System.currentTimeMillis()+".zip\""));

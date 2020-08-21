@@ -3,6 +3,7 @@ package com.github.fashionbrot.scaffold.service;
 import com.github.fashionbrot.scaffold.mapper.BaseMapper;
 import com.github.fashionbrot.scaffold.entity.ColumnEntity;
 import com.github.fashionbrot.scaffold.entity.TableEntity;
+import com.github.fashionbrot.scaffold.req.CodeReq;
 import com.github.fashionbrot.scaffold.req.PageReq;
 import com.github.fashionbrot.scaffold.util.ScaffoldUtil;
 import com.github.fashionbrot.scaffold.vo.PageVo;
@@ -49,12 +50,13 @@ public class ScaffoldService {
         return baseMapper.queryColumns(tableName);
     }
 
-    public byte[] generatorCode(String[] tableNames) {
+    public byte[] generatorCode(CodeReq req) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream);
+        String[] tableNames = req.getTables().split(",");
 
         for(String tableName : tableNames){
-            scaffoldUtil.generator(queryTable(tableName), queryColumns(tableName), zip);
+            scaffoldUtil.generator(req,queryTable(tableName), queryColumns(tableName), zip);
         }
         IOUtils.closeQuietly(zip);
         return outputStream.toByteArray();
