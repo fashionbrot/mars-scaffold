@@ -15,14 +15,17 @@
             <result property="${column.variableAttrName}" column="${column.columnName}"/>
         #end
     </resultMap>
+    <sql id="allSql">
+        ${allColumnNames}
+    </sql>
 
-    <select id="${variableClassName}List" resultMap="${variableClassName}DtoMap">
+    #*<select id="${variableClassName}List" resultMap="${variableClassName}DtoMap">
         SELECT
         #foreach($column in $columns)
                 ${column.columnName}#if($foreach.count != $columns.size()),#end
         #end
-        FROM ${tableName}
-        WHERE DEL_FLAG = 0
-    </select>
+        FROM ${oldTableName}
+        WHERE del_flag = 0
+    </select>*#
 
 </mapper>

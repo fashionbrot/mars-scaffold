@@ -69,7 +69,7 @@ public class ScaffoldUtil {
         map.put(packagePath+File.separator+"Application.java","fixed/Application.java.vm");
         map.put(projectName+File.separator+"pom.xml","fixed/pom.xml.vm");
 
-        String resource =getResource(req.getProjectName());
+        String resource =getResource(projectName);
         map.put(resource+File.separator+"application.properties","fixed/application.properties.vm");
         map.put(resource+File.separator+"application.yml","fixed/application.yml.vm");
         return map;
@@ -78,10 +78,9 @@ public class ScaffoldUtil {
     public String getPackagePath(CodeReq req){
         String projectName = req.getProjectName();
         String packageName = req.getPackagePath();
-        String moduleName = req.getModuleName();
         String packagePath =projectName+File.separator+"src"+File.separator+ "main" + File.separator + "java" + File.separator;
         if (StringUtils.isNotBlank(packageName)) {
-            packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
+            packagePath += packageName.replace(".", File.separator) + File.separator ;
         }
         return  packagePath;
     }
@@ -140,7 +139,7 @@ public class ScaffoldUtil {
 
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
-        map.put("tableName", tableEntity.getTableName().replaceAll(req.getExcludePrefix(),""));
+        map.put("oldTableName", tableEntity.getTableName());
         // 处理注释
         if(StringUtils.isNotBlank(tableEntity.getComments())){
             map.put("comments", tableEntity.getComments());
@@ -151,9 +150,19 @@ public class ScaffoldUtil {
             map.put("commentsDao", tableEntity.getComments());
         }
         map.put("pk", tableEntity.getPrimaryKeyColumnEntity());
-        map.put("className", tableEntity.getClassName());
+        map.put("className", tableEntity.getClassName().replace(captureName(req.getExcludePrefix()),""));
         map.put("variableClassName", tableEntity.getVariableClassName());
         map.put("columns", tableEntity.getColumns());
+        StringBuilder sb=new StringBuilder();
+        for(ColumnEntity c:tableEntity.getColumns()){
+            if (StringUtils.isNotBlank(sb.toString())) {
+                sb.append(",").append(c.getColumnName());
+            }else{
+                sb.append(c.getColumnName());
+            }
+        }
+        map.put("allColumnNames",sb.toString());
+
         map.put("hasBigDecimal", hasBigDecimal);
        /* map.put("main", main);*/
         // API接口排序
@@ -161,13 +170,8 @@ public class ScaffoldUtil {
             map.put("apiSort", StringUtils.substring(String.valueOf(tableEntity.getCreateTime().getTime() + System.currentTimeMillis()), 1, 9));
         }
 
-        String moduleName = req.getModuleName();
         String packagePath = req.getPackagePath();
-        if(StringUtils.isNotBlank(moduleName)){
-            map.put("package", packagePath + "." + moduleName);
-        }else {
-            map.put("package", packagePath);
-        }
+        map.put("package", packagePath);
         if(StringUtils.isNotBlank(tableEntity.getTableName())){
             String tableName = StringUtils.lowerCase(tableEntity.getTableName());
             map.put("pathName", tableName.replace("_","/"));
@@ -234,7 +238,8 @@ public class ScaffoldUtil {
             Template tpl = Velocity.getTemplate(template, "UTF-8");
             tpl.merge(context, sw);
             //添加到zip
-            String className = tableEntity.getClassName().replaceFirst(req.getExcludePrefix(),"");
+            //替换表前缀
+            String className = tableEntity.getClassName().replace(captureName(req.getExcludePrefix()),"");
             String fileName =getFileName(template, className, req);
             ZipEntry zipEntry = new ZipEntry(fileName);
 
@@ -299,6 +304,16 @@ public class ScaffoldUtil {
 
         return null;
     }
-
+    /**
+     * 将字符串的首字母转大写
+     * @param str 需要转换的字符串
+     * @return
+     */
+    private static String captureName(String str) {
+        // 进行字母的ascii编码前移，效率要高于截取字符串进行转换的操作
+        char[] cs=str.toCharArray();
+        cs[0]-=32;
+        return String.valueOf(cs);
+    }
 
 }

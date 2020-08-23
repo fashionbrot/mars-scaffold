@@ -21,12 +21,8 @@ import java.util.Map;
  */
 @Mapper
 public interface ${className}Mapper extends BaseMapper<${className}Entity> {
-    /**
-     * 查询数据列表
-     * @param params 查询条件
-     * @return List<${className}DTO>
-     */
-    List<${className}DTO> ${variableClassName}List(@Param("params") Map<String, Object> params);
+
+    #*List<${className}DTO> ${variableClassName}List(@Param("params") Map<String, Object> params);*#
 
 
 }
