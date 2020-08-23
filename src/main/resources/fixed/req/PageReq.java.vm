@@ -1,16 +1,30 @@
 package ${package}.req;
 
 import lombok.Data;
+#if ($swaggerStatus==1)
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+#end
 @Data
+#if ($swaggerStatus==1)
 @ApiModel(value = "分页req")
+#end
 public class PageReq {
 
-    @ApiModelProperty(value = "当前页码n")
+    #if ($swaggerStatus==1)
+    @ApiModelProperty(value = "当前页码")
+    #else
+    /**
+     * 当前页码
+     */
+    #end
     private int start;
-
+    #if ($swaggerStatus==1)
     @ApiModelProperty(value = "每页条数")
+    #else
+    /**
+     * 每页条数
+     */
+    #end
     private int length;
 }

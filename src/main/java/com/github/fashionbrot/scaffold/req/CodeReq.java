@@ -5,6 +5,10 @@ import lombok.Data;
 @Data
 public class CodeReq {
 
+    private String moduleName="example";
+
+    private String projectName="example";
+
     private String tables;
 
     private String packagePath;

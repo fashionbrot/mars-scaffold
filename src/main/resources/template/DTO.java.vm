@@ -1,8 +1,8 @@
 package ${package}.dto;
-
+#if ($swaggerStatus==1)
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+#end
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -19,12 +19,20 @@ import java.math.BigDecimal;
  * @date ${date}
  */
 @Data
+#if ($swaggerStatus==1)
 @ApiModel(value = "${commentsEntity}")
+#end
 public class ${className}DTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
+	#if ($swaggerStatus==1)
 	@ApiModelProperty(value = "$column.comments")
+	#else
+	/**
+	* $column.comments
+	*/
+	#end
 	private $column.attrType $column.variableAttrName;
 
 #end

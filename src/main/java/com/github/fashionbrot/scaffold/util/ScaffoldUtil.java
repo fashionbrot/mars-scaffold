@@ -47,9 +47,9 @@ public class ScaffoldUtil {
      * value 是vm 模板
      * @return
      */
-    public  Map<String,String> getFixedTemplates(){
-        String packagePath = getPackagePath();
-        String projectName = config.getProperty("projectName");
+    public  Map<String,String> getFixedTemplates(CodeReq req){
+        String packagePath = getPackagePath(req);
+        String projectName = req.getProjectName();
         Map<String,String> map=new HashMap<>();
         map.put(packagePath+File.separator+"entity"+File.separator+"BaseEntity.java","fixed/BaseEntity.java.vm");
         map.put(packagePath+File.separator+"service"+File.separator+"BaseService.java","fixed/BaseService.java.vm");
@@ -63,20 +63,22 @@ public class ScaffoldUtil {
         map.put(packagePath+File.separator+"util"+File.separator+"ConvertUtils.java","fixed/util/ConvertUtils.java.vm");
         map.put(packagePath+File.separator+"req"+File.separator+"PageReq.java","fixed/req/PageReq.java.vm");
 
-
-        map.put(packagePath+File.separator+projectName+"Application.java","fixed/Application.java.vm");
+        if (req.getSwaggerStatus()==1){
+             map.put(packagePath+File.separator+"config"+File.separator+"SwaggerConfig.java","fixed/config/SwaggerConfig.java.vm");
+        }
+        map.put(packagePath+File.separator+"Application.java","fixed/Application.java.vm");
         map.put(projectName+File.separator+"pom.xml","fixed/pom.xml.vm");
 
-        String resource =getResource();
+        String resource =getResource(req.getProjectName());
         map.put(resource+File.separator+"application.properties","fixed/application.properties.vm");
         map.put(resource+File.separator+"application.yml","fixed/application.yml.vm");
         return map;
     }
 
-    public String getPackagePath(){
-        String projectName = config.getProperty("projectName");
-        String packageName = config.getProperty("package");
-        String moduleName = config.getProperty("moduleName");
+    public String getPackagePath(CodeReq req){
+        String projectName = req.getProjectName();
+        String packageName = req.getPackagePath();
+        String moduleName = req.getModuleName();
         String packagePath =projectName+File.separator+"src"+File.separator+ "main" + File.separator + "java" + File.separator;
         if (StringUtils.isNotBlank(packageName)) {
             packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
@@ -84,9 +86,7 @@ public class ScaffoldUtil {
         return  packagePath;
     }
 
-    public String getResource(){
-        String projectName = config.getProperty("projectName");
-        String packageName = config.getProperty("package");
+    public String getResource(String projectName){
         return projectName+File.separator+"src"+File.separator+ "main" + File.separator + "resources";
     }
 
@@ -137,9 +137,6 @@ public class ScaffoldUtil {
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
 
-/*        String main = config.getProperty("main" );
-
-        main = StringUtils.isBlank(main) ? config.getProperty("package" ) : main;*/
 
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
@@ -164,7 +161,7 @@ public class ScaffoldUtil {
             map.put("apiSort", StringUtils.substring(String.valueOf(tableEntity.getCreateTime().getTime() + System.currentTimeMillis()), 1, 9));
         }
 
-        String moduleName = config.getProperty("moduleName" );
+        String moduleName = req.getModuleName();
         String packagePath = req.getPackagePath();
         if(StringUtils.isNotBlank(moduleName)){
             map.put("package", packagePath + "." + moduleName);
@@ -180,21 +177,21 @@ public class ScaffoldUtil {
             // className.toLowerCase()
             map.put("vueFileName", className.toLowerCase());
         }
-        map.put("moduleName", config.getProperty("moduleName" ));
+        map.put("moduleName", req.getModuleName());
         map.put("author", req.getAuthor());
         map.put("version", req.getVersion());
         map.put("email", req.getEmail());
         map.put("datetime", DateUtil.format(new Date(), DateUtil.DATE_TIME_PATTERN));
         map.put("date", DateUtil.format(new Date(), DateUtil.DATE_PATTERN));
-        map.put("projectName",config.getProperty("projectName"));
-        map.put("package2",map.get("package").toString().replace(".",File.separator));
+        map.put("projectName",req.getProjectName());
+        map.put("package2",map.get("package").toString().replace(".","/"));
         VelocityContext context = new VelocityContext(map);
 
         //获取模板列表
         List<String> templates = getTemplates();
-        Map<String,String> mapTemplate = getFixedTemplates();
+        Map<String,String> mapTemplate = getFixedTemplates(req);
         try {
-            generateTemplate(tableEntity, zip, context, templates);
+            generateTemplate(tableEntity, zip, context, templates,req);
 
             if(flag.isFlag()==false) {
                 generateTemplate( zip, context, mapTemplate);
@@ -229,7 +226,7 @@ public class ScaffoldUtil {
         }
     }
 
-    private void generateTemplate(TableEntity tableEntity, ZipOutputStream zip, VelocityContext context, List<String> templates) throws IOException {
+    private void generateTemplate(TableEntity tableEntity, ZipOutputStream zip, VelocityContext context, List<String> templates,CodeReq req) throws IOException {
         for(String template : templates){
             log.info("template:{}",template);
             //渲染模板
@@ -237,7 +234,8 @@ public class ScaffoldUtil {
             Template tpl = Velocity.getTemplate(template, "UTF-8");
             tpl.merge(context, sw);
             //添加到zip
-            String fileName =getFileName(template, tableEntity.getClassName(), config.getProperty("package"), config.getProperty("moduleName"));
+            String className = tableEntity.getClassName().replaceFirst(req.getExcludePrefix(),"");
+            String fileName =getFileName(template, className, req);
             ZipEntry zipEntry = new ZipEntry(fileName);
 
             zip.putNextEntry(zipEntry);
@@ -268,8 +266,8 @@ public class ScaffoldUtil {
     /**
      * 获取文件名
      */
-    public  String getFileName(String template, String className, String packageName, String moduleName) {
-        String packagePath =getPackagePath();
+    public  String getFileName(String template, String className,CodeReq req) {
+        String packagePath =getPackagePath(req);
 
         if (template.contains("Entity.java.vm" )) {
             return packagePath + "entity" + File.separator + className + "Entity.java";

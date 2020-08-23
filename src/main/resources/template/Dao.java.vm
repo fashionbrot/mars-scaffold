@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2020 金电联行 All rights reserved.
- *
- * 3Golden Authorized Use
- *
- * 版权所有，侵权必究！
- */
-
 package ${package}.dao;
 
 import ${main}.commons.mybatis.dao.BaseDao;
@@ -19,11 +11,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * ${commentsDao}
  *
- * @author ${author} ${email}
- * @since ${version} ${date}
+ * @author ${author}
+ * @email ${email}
+ * @date ${date}
  */
 @Mapper
 public interface ${className}Dao extends BaseDao<${className}Entity> {

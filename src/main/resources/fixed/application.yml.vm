@@ -25,4 +25,8 @@ pagehelper:
 
 mybatis-plus:
   mapper-locations: classpath*:${package2}/mapper/xml/*.xml
-  type-aliases-package: ${package2}.entity
+  type-aliases-package: ${package}.entity
+  global-config:
+    db-config:
+        logic-delete-value: 1
+        logic-not-delete-value: 0

@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2020 金电联行 All rights reserved.
- *
- * 3Golden Authorized Use
- *
- * 版权所有，侵权必究！
- */
-
 package ${package}.excel;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
@@ -16,11 +8,13 @@ import java.math.BigDecimal;
 #end
 import java.util.Date;
 
+
 /**
  * ${commentsEntity}
  *
- * @author ${author} ${email}
- * @since ${version} ${date}
+ * @author ${author}
+ * @email ${email}
+ * @date ${date}
  */
 @Data
 public class ${className}Excel {

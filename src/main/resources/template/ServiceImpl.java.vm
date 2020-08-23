@@ -49,7 +49,7 @@ public class ${className}ServiceImpl
     * @return
     */
     public PageVo pageList(${className}Req req){
-        Page<?> page = PageHelper.startPage((req.getStart() / req.getLength()) + 1, req.getLength());
+        Page<Object> page= PageHelper.startPage((req.getStart() / req.getLength()) + 1, req.getLength());
         List<${className}DTO> list = mapper.${variableClassName}List(null);
         return PageVo.builder()
                 .data(list)
