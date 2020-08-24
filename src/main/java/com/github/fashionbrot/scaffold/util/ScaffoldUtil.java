@@ -52,8 +52,6 @@ public class ScaffoldUtil {
         String projectName = req.getProjectName();
         Map<String,String> map=new HashMap<>();
         map.put(packagePath+File.separator+"entity"+File.separator+"BaseEntity.java","fixed/BaseEntity.java.vm");
-        map.put(packagePath+File.separator+"service"+File.separator+"BaseService.java","fixed/BaseService.java.vm");
-        map.put(packagePath+File.separator+"service"+File.separator+"impl"+File.separator+"BaseServiceImpl.java","fixed/BaseServiceImpl.java.vm");
         map.put(packagePath+File.separator+"config"+File.separator+"GlobalExceptionHandler.java","fixed/config/GlobalExceptionHandler.java.vm");
         map.put(packagePath+File.separator+"consts"+File.separator+"GlobalConst.java","fixed/consts/GlobalConst.java.vm");
         map.put(packagePath+File.separator+"enums"+File.separator+"RespCode.java","fixed/enums/RespCode.java.vm");
@@ -151,6 +149,7 @@ public class ScaffoldUtil {
         }
         map.put("pk", tableEntity.getPrimaryKeyColumnEntity());
         map.put("className", tableEntity.getClassName().replace(captureName(req.getExcludePrefix()),""));
+
         map.put("variableClassName", tableEntity.getVariableClassName());
         map.put("columns", tableEntity.getColumns());
         StringBuilder sb=new StringBuilder();
@@ -283,6 +282,13 @@ public class ScaffoldUtil {
 
         if (template.contains("Mapper.java.vm" )) {
             return packagePath + "mapper" + File.separator + className + "Mapper.java";
+        }
+
+        if (template.contains("Dao.java.vm" ) ) {
+            return packagePath + "dao" + File.separator + className + "Dao.java";
+        }
+        if (template.contains("DaoImpl.java.vm" )) {
+            return packagePath + "dao" + File.separator + "impl" + File.separator + className + "DaoImpl.java";
         }
 
         if (template.contains("Service.java.vm" ) ) {

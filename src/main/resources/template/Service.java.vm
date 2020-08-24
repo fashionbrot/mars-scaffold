@@ -1,5 +1,6 @@
 package ${package}.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import ${package}.dto.${className}DTO;
 import ${package}.entity.${className}Entity;
 import ${package}.req.${className}Req;
@@ -7,6 +8,8 @@ import ${package}.vo.PageVo;
 
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * ${commentsEntity}
@@ -15,15 +18,8 @@ import java.util.Map;
  * @email ${email}
  * @date ${date}
  */
-public interface ${className}Service extends BaseService<${className}Entity,${className}DTO>  {
+public interface ${className}Service  {
 
-
-    /**
-     * 查询数据列表
-     * @param params 查询条件
-     * @return List<${className}DTO>
-     */
-    List<${className}DTO> ${variableClassName}List(Map<String, Object> params);
 
     /**
      * 分页查询
@@ -32,4 +28,97 @@ public interface ${className}Service extends BaseService<${className}Entity,${cl
      */
     PageVo pageList(${className}Req req);
 
+
+    /**
+     * <p>
+     * 插入一条记录（选择字段，策略插入）
+     * </p>
+     *
+     * @param entity 实体对象
+     */
+    void insert(${className}Entity entity);
+
+    /**
+     * <p>
+     * 插入（批量），该方法不支持 Oracle、SQL Server
+     * </p>
+     *
+     * @param entityList 实体对象集合
+     */
+    boolean insertBatch(Collection<${className}Entity> entityList);
+
+    /**
+     * <p>
+     * 插入（批量）
+     * </p>
+     *
+     * @param entityList 实体对象集合
+     * @param batchSize  插入批次数量
+     */
+    boolean insertBatch(Collection<${className}Entity> entityList, int batchSize);
+
+    /**
+     * <p>
+     * 根据 ID 选择修改
+     * </p>
+     *
+     * @param entity 实体对象
+     */
+    void updateById(${className}Entity entity);
+
+    /**
+     * <p>
+     * 根据 whereEntity 条件，更新记录
+     * </p>
+     *
+     * @param entity        实体对象
+     * @param updateWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper}
+     */
+    void update(${className}Entity entity, Wrapper<${className}Entity> updateWrapper);
+
+    /**
+     * <p>
+     * 根据ID 批量更新
+     * </p>
+     *
+     * @param entityList 实体对象集合
+     */
+    boolean updateBatchById(Collection<${className}Entity> entityList);
+
+    /**
+     * <p>
+     * 根据ID 批量更新
+     * </p>
+     *
+     * @param entityList 实体对象集合
+     * @param batchSize  更新批次数量
+     */
+    boolean updateBatchById(Collection<${className}Entity> entityList, int batchSize);
+
+    /**
+     * <p>
+     * 根据 ID 查询
+     * </p>
+     *
+     * @param id 主键ID
+     */
+    ${className}Entity selectById(Serializable id);
+
+    /**
+     * <p>
+     * 根据 ID 删除
+     * </p>
+     *
+     * @param id 主键ID
+     */
+    void deleteById(Serializable id);
+
+    /**
+     * <p>
+     * 删除（根据ID 批量删除）
+     * </p>
+     *
+     * @param idList 主键ID列表
+     */
+    void deleteBatchIds(Collection<? extends Serializable> idList);
 }

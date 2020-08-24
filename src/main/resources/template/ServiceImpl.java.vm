@@ -1,8 +1,13 @@
 package ${package}.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import ${package}.mapper.${className}Mapper;
+import ${package}.dao.${className}Dao;
 import ${package}.dto.${className}DTO;
 import ${package}.entity.${className}Entity;
 import ${package}.service.${className}Service;
@@ -15,7 +20,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -27,27 +33,18 @@ import java.util.Map;
  * @date ${date}
  */
 @Service
-public class ${className}ServiceImpl
-        extends BaseServiceImpl<${className}Mapper, ${className}Entity, ${className}DTO>
-        implements ${className}Service {
-
+public class ${className}ServiceImpl implements ${className}Service {
 
     @Autowired
-    private ${className}Mapper mapper;
+    private ${className}Dao ${variableClassName}Dao;
+
     /**
      * 查询数据列表
      * @param params 查询条件
-     * @return List<${className}DTO>
+     * @return List<${className}Entity>
      */
-    public List<${className}DTO> ${variableClassName}List(Map<String, Object> params){
-        QueryWrapper queryWrapper=null;
-        if (CollectionUtils.isNotEmpty(params)) {
-            queryWrapper = new QueryWrapper<${className}Entity>();
-            for (Map.Entry<String, Object> m : params.entrySet()) {
-                queryWrapper.eq(m.getKey(),m.getValue());
-            }
-        }
-        return mapper.selectList(queryWrapper);
+    public List<${className}Entity> ${className}List(Map<String, Object> params){
+        return ${variableClassName}Dao.selectByMap(params);
     }
 
     /**
@@ -57,11 +54,88 @@ public class ${className}ServiceImpl
     */
     public PageVo pageList(${className}Req req){
         Page<?> page= PageHelper.startPage((req.getStart() / req.getLength()) + 1, req.getLength());
-        List<${className}Entity> list = mapper.selectList(null);
+        List<${className}Entity> list = ${variableClassName}Dao.selectList(null);
         return PageVo.builder()
                 .data(list)
                 .iTotalDisplayRecords(page.getTotal())
                 .build();
     }
+
+
+    @Override
+    public void insert(${className}Entity entity) {
+        if(${variableClassName}Dao.insert(entity)!=1){
+            throw new CurdException(RespCode.SAVE_ERROR);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean insertBatch(Collection<${className}Entity> entityList) {
+        return ${variableClassName}Dao.insertBatch(entityList,30);
+    }
+
+    /**
+     * 批量插入
+     *
+     * @param entityList
+     * @param batchSize
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean insertBatch(Collection<${className}Entity> entityList, int batchSize) {
+        return ${variableClassName}Dao.insertBatch(entityList,batchSize);
+    }
+
+    @Override
+    public void updateById(${className}Entity entity) {
+        if(!${variableClassName}Dao.updateById(entity)){
+            throw new CurdException(RespCode.UPDATE_ERROR);
+        }
+    }
+
+    @Override
+    public void update(${className}Entity entity, Wrapper<${className}Entity> updateWrapper) {
+        if(!${variableClassName}Dao.update(entity, updateWrapper)){
+            throw new CurdException(RespCode.UPDATE_ERROR);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateBatchById(Collection<${className}Entity> entityList) {
+        return ${variableClassName}Dao.updateBatchById(entityList,30);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateBatchById(Collection<${className}Entity> entityList, int batchSize) {
+        return ${variableClassName}Dao.updateBatchById(entityList,batchSize);
+    }
+
+    @Override
+    public ${className}Entity selectById(Serializable id) {
+        return ${variableClassName}Dao.selectById(id);
+    }
+
+    @Override
+    public void deleteById(Serializable id) {
+        if(${variableClassName}Dao.deleteById(id)!=1){
+            throw new CurdException(RespCode.DELETE_ERROR);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteBatchIds(Collection<? extends Serializable> idList) {
+        if (CollectionUtils.isNotEmpty(idList)){
+            int result = ${variableClassName}Dao.deleteBatchIds(idList);
+            if (idList.size()!=result){
+                throw new CurdException(RespCode.DELETE_ERROR);
+            }
+        }
+    }
+
 
 }
