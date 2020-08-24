@@ -1,11 +1,11 @@
 package ${package}.service;
 
 
-import ${package}.dto.${className}DTO;
+#*import ${package}.dto.${className}DTO;
 import ${package}.entity.${className}Entity;
 import ${package}.vo.RespVo;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
-import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;*#
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;

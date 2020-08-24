@@ -37,6 +37,7 @@ public class ${className}Entity extends BaseEntity {
 	/**
      * $column.comments
      */
+	@TableField("${column.columnName}")
 	private $column.attrType $column.variableAttrName;
 #end
 #end
