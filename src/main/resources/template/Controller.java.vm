@@ -71,8 +71,8 @@ public class ${className}Controller {
     @GetMapping("/queryList")
     #end
     @ResponseBody
-    public List<${className}DTO> queryList(Map<String, Object> params){
-        return  ${variableClassName}Service.${variableClassName}List(params);
+    public List<${className}Entity> queryList(Map<String, Object> params){
+        return  ${variableClassName}Service.queryList(params);
     }
 
 

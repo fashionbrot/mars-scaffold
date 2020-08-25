@@ -34,6 +34,8 @@ public class ScaffoldUtil {
         templates.add("template/Entity.java.vm");
         templates.add("template/Mapper.java.vm");
         templates.add("template/Mapper.xml.vm");
+        templates.add("template/Dao.java.vm");
+        templates.add("template/DaoImpl.java.vm");
         templates.add("template/Service.java.vm");
         templates.add("template/ServiceImpl.java.vm");
         templates.add("template/Controller.java.vm");

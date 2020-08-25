@@ -20,6 +20,12 @@ import java.util.Collection;
  */
 public interface ${className}Service  {
 
+    /**
+     * 根据 map 查询
+     * @param params
+     * @return
+     */
+    List<${className}Entity> queryList(Map<String, Object> params);
 
     /**
      * 分页查询

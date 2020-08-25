@@ -13,6 +13,8 @@ import ${package}.entity.${className}Entity;
 import ${package}.service.${className}Service;
 import ${package}.req.${className}Req;
 import ${package}.vo.PageVo;
+import ${package}.enums.RespCode;
+import ${package}.exception.CurdException;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -37,6 +39,11 @@ public class ${className}ServiceImpl implements ${className}Service {
 
     @Autowired
     private ${className}Dao ${variableClassName}Dao;
+
+    @Override
+    public List<${className}Entity> queryList(Map<String, Object> params) {
+        return ${variableClassName}Dao.selectByMap(params);
+    }
 
     /**
      * 查询数据列表
