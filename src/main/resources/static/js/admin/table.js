@@ -68,6 +68,33 @@ $("#swaggerStatus").on("click",function (){
         $("#swaggerStatus").val("0");
     }
 })
+    $("#packagePath").on("blur", function(){
+       var pp= $("#packagePath").val();
+       var dp=$("#daoPackage").val();
+       var sp=$("#servicePackage").val();
+       var cp=$("#commonPackage").val();
+       /*if (!dp){
+           $("#daoPackage").val(pp);
+       }else{
+           if (pp!=dp){
+               $("#daoPackage").val(pp+"."+dp);
+           }
+       }
+        if (!sp){
+            $("#servicePackage").val(pp);
+        }else{
+            if (pp!=sp){
+                $("#servicePackage").val(pp+"."+sp);
+            }
+        }
+        if (!cp){
+            $("#commonPackage").val(pp);
+        }else{
+            if (pp!=cp ) {
+                $("#commonPackage").val(pp + "." + cp);
+            }
+        }*/
+    });
 
 });
 
@@ -91,8 +118,14 @@ function code() {
     var version =$("#version").val();
     var email=$("#email").val();
     var swaggerStatus=$("#swaggerStatus").val();
+    var controllerPackage=$("#controllerPackage").val();
+    var commonPackage=$("#commonPackage").val();
+    var servicePackage=$("#servicePackage").val();
+    var daoPackage=$("#daoPackage").val();
+
     window.location.href="./scaffold/code?tables="+tables+"&packagePath="+packagePath+"&excludePrefix="+excludePrefix
-    +"&author="+author+"&version="+version+"&email="+email+"&swaggerStatus="+swaggerStatus;
+    +"&author="+author+"&version="+version+"&email="+email+"&swaggerStatus="+swaggerStatus+"&controllerPackage="+controllerPackage
+    +"&commonPackage="+commonPackage+"&servicePackage="+servicePackage+"&daoPackage="+daoPackage;
     /*loading();
     $.ajax({
         url: "./scaffold/code",

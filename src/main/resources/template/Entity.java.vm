@@ -34,9 +34,14 @@ public class ${className}Entity extends BaseEntity {
 	&& $column.columnName != 'CREATE_DATE'&& $column.columnName != 'create_date'
 	&& $column.columnName != 'UPDATE_ID' && $column.columnName != 'update_id'
 	&& $column.columnName != 'UPDATE_DATE'&& $column.columnName != 'update_date')
+
+	#if ($swaggerStatus==1)
+	@ApiModelProperty(value = "$column.comments")
+	#else
 	/**
-     * $column.comments
-     */
+	 * $column.comments
+	 */
+	#end
 	@TableField("${column.columnName}")
 	private $column.attrType $column.variableAttrName;
 #end

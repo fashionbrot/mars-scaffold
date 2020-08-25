@@ -190,6 +190,7 @@ public class ScaffoldUtil {
         map.put("date", DateUtil.format(new Date(), DateUtil.DATE_PATTERN));
         map.put("projectName",req.getProjectName());
         map.put("package2",map.get("package").toString().replace(".","/"));
+        map.put("swaggerStatus",req.getSwaggerStatus());
         VelocityContext context = new VelocityContext(map);
 
         //获取模板列表

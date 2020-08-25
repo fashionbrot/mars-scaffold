@@ -25,6 +25,7 @@
         <pagehelper.spring.boot.version>1.2.13</pagehelper.spring.boot.version>
         <fastjson.version>1.2.70</fastjson.version>
         <mybatisplus.version>3.3.2</mybatisplus.version>
+        <knife4j-swagger-ui.version>2.0.3</knife4j-swagger-ui.version>
     </properties>
 
     <dependencies>
@@ -87,17 +88,22 @@
           <version>${fastjson.version}</version>
         </dependency>
         #if ($swaggerStatus==1)
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>2.5.0</version>
-            </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.5.0</version>
+        </dependency>
 
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>swagger-bootstrap-ui</artifactId>
-                <version>1.9.6</version>
-            </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${knife4j-swagger-ui.version}</version>
+        </dependency>
         #end
         <dependency>
             <groupId>mysql</groupId>

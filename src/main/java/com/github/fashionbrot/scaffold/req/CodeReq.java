@@ -22,4 +22,12 @@ public class CodeReq {
     private String email;
 
     private int swaggerStatus;
+
+    private String controllerPackage;
+
+    private String commonPackage;
+
+    private String servicePackage;
+
+    private String daoPackage;
 }

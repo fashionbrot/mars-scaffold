@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 public class ${className}DTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-#foreach ($column in $columns)
+	#foreach ($column in $columns)
 	#if ($swaggerStatus==1)
 	@ApiModelProperty(value = "$column.comments")
 	#else
@@ -35,5 +35,5 @@ public class ${className}DTO implements Serializable {
 	#end
 	private $column.attrType $column.variableAttrName;
 
-#end
+	#end
 }

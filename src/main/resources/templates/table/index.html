@@ -43,6 +43,7 @@
                             </div>
                         </div>
                         <div class="panel-heading" style="float: right;">
+
                             <div class="btn-group" style="width: 600px" >&nbsp;
                                 包名：<input id="packagePath" type="text" style="width:150px;display:inline" class="form-control" placeholder="请输入包名" value="com.example" />
                                 剔除表名前缀：<input id="excludePrefix" type="text" style="width:150px;display:inline" class="form-control" placeholder="表名前缀" />
@@ -51,8 +52,19 @@
                                 &nbsp;&nbsp;作者：<input id="author" type="text" style="width:150px;display:inline" class="form-control" placeholder="请输入注释的作者名称" value="scaffold"  />
                                 版本：<input id="version" type="text" style="width:150px;display:inline"  class="form-control" placeholder="请输入注释的版本" value="0.0.1" />
                                 邮箱：<input id="email" type="text" style="width:150px;display:inline" class="form-control" placeholder="请输入注释的邮箱" value="fashionbrot@163.com" />
-                            </div>
+                                </br>
+                                <div style="display: none">
 
+
+                                dao package:<input id="daoPackage" type="text" style="width:150px;display:inline" class="form-control" placeholder="dao package path"   />
+                                </br>
+                                service package:<input id="servicePackage" type="text" style="width:150px;display:inline" class="form-control" placeholder="service package path"   />
+                                </br>
+                                common package:<input id="commonPackage" type="text" style="width:150px;display:inline" class="form-control" placeholder="common package path"   />
+                                </br>
+                                controller package:<input id="controllerPackage" type="text" style="width:150px;display:inline" class="form-control" placeholder="common package path"   />
+                                </div>
+                            </div>
 
 
                             <div class="pull-right" style="margin-right: 1rem;">
