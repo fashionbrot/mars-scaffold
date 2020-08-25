@@ -8,7 +8,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import ${package}.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
+#if ($swaggerStatus==1)
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+#end
 #if(${hasBigDecimal})
 import java.math.BigDecimal;
 #end
@@ -21,6 +24,9 @@ import java.util.Date;
  * @email ${email}
  * @date ${date}
  */
+#if ($swaggerStatus==1)
+@ApiModel(value = "${commentsEntity}")
+#end
 @Data
 @EqualsAndHashCode(callSuper=false)
 @TableName("${oldTableName}")
