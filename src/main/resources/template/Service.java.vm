@@ -127,4 +127,22 @@ public interface ${className}Service  {
      * @param idList 主键ID列表
      */
     void deleteBatchIds(Collection<? extends Serializable> idList);
+
+    /**
+     * <p>
+     * 根据 columnMap 条件，删除记录
+     * </p>
+     *
+     * @param columnMap 表字段 map 对象
+     */
+    int deleteByMap(Map<String, Object> columnMap);
+
+    /**
+     * <p>
+     * 根据 entity 条件，删除记录
+     * </p>
+     *
+     * @param queryWrapper 实体对象封装操作类（可以为 null）
+     */
+    int delete(Wrapper<${className}Entity> queryWrapper);
 }

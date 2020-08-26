@@ -145,5 +145,16 @@ public class ${className}ServiceImpl implements ${className}Service {
         }
     }
 
+    @Override
+    public int deleteByMap(Map<String, Object> columnMap) {
+        return ${variableClassName}Dao.deleteByMap(columnMap);
+    }
+
+    @Override
+    public int delete(Wrapper<${className}Entity> queryWrapper) {
+        return ${variableClassName}Dao.delete(queryWrapper);
+    }
+
+
 
 }
