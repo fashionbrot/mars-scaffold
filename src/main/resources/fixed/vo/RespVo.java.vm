@@ -11,39 +11,30 @@ import java.io.Serializable;
 /**
 * 统一返回vo 类
 */
-
-public class RespVo<T> implements Serializable{
-
-    private static final long serialVersionUID = 359373498032407677L;
+@Data
+@Builder
+@AllArgsConstructor
+public class RespVo implements Serializable{
+    private static final long serialVersionUID = -3655390020082644681L;
 
     public static final int SUCCESS = RespCode.SUCCESS.getCode();
     public static final int FAILED = RespCode.FAIL.getCode();
 
     private int code;
     private String msg;
-    private T data;
+    private Object data;
 
 
     public static  RespVo fail(String msg){
-        RespVo vo=new RespVo();
-        vo.setCode(FAILED);
-        vo.setMsg(msg);
-        return vo;
+        return RespVo.builder().code(FAILED).msg(msg).build();
     }
 
     public static  RespVo fail(String msg, int code){
-        RespVo vo=new RespVo();
-        vo.setCode(code);
-        vo.setMsg(msg);
-        return vo;
+        return RespVo.builder().code(code).msg(msg).build();
     }
 
-    public static<T> RespVo<T> success(T data){
-        RespVo vo=new RespVo();
-        vo.setCode(SUCCESS);
-        vo.setMsg("成功");
-        vo.setData(data);
-        return vo;
+    public static RespVo success(Object data){
+        return RespVo.builder().code(SUCCESS).msg("成功").data(data).build();
     }
 
     public static RespVo success(){
@@ -51,33 +42,7 @@ public class RespVo<T> implements Serializable{
     }
 
     public static RespVo respCode(RespCode respCode){
-        RespVo vo=new RespVo();
-        vo.setCode(respCode.getCode());
-        vo.setMsg(respCode.getMsg());
-        return vo;
+        return RespVo.builder().code(respCode.getCode()).msg(respCode.getMsg()).build();
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }
