@@ -26,33 +26,33 @@ public class ${className}DaoImpl  extends ServiceImpl<${className}Mapper,${class
 
     @Override
     public boolean insertBatch(Collection<${className}Entity> entityList) {
-        return saveBatch(entityList);
+        return super.saveBatch(entityList);
     }
 
     @Override
     public boolean insertBatch(Collection<${className}Entity> entityList, int batchSize) {
-        return saveBatch(entityList,batchSize);
+        return super.saveBatch(entityList,batchSize);
     }
 
 
     public boolean updateById(${className}Entity entity){
-        return updateById(entity);
+        return super.updateById(entity);
     }
 
 
     public boolean update(${className}Entity entity, Wrapper<${className}Entity> updateWrapper){
-        return update(entity,updateWrapper);
+        return super.update(entity,updateWrapper);
     }
 
 
     @Override
     public boolean updateBatchById(Collection<${className}Entity> entityList) {
-        return saveOrUpdateBatch(entityList);
+        return super.saveOrUpdateBatch(entityList);
     }
 
     @Override
     public boolean updateBatchById(Collection<${className}Entity> entityList, int batchSize) {
-        return saveOrUpdateBatch(entityList,batchSize);
+        return super.saveOrUpdateBatch(entityList,batchSize);
     }
 
     @Override
