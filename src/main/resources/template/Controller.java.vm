@@ -78,12 +78,12 @@ public class ${className}Controller {
 
     #if ($swaggerStatus==1)
     @ApiOperation("根据id查询")
-    @GetMapping("/selectById")
+    @PostMapping("/selectById")
     #else
     /**
      * 根据id查询
      */
-    @GetMapping("/selectById")
+    @PostMapping("/selectById")
     #end
     @ResponseBody
     public RespVo selectById( Long id){
@@ -94,12 +94,12 @@ public class ${className}Controller {
 
     #if ($swaggerStatus==1)
     @ApiOperation("新增")
-    @RequestMapping("/insert")
+    @PostMapping("/insert")
     #else
     /**
      * 新增
      */
-    @RequestMapping("/insert")
+    @PostMapping("/insert")
     #end
     @ResponseBody
     public RespVo add(@RequestBody ${className}Entity entity){
@@ -110,28 +110,42 @@ public class ${className}Controller {
 
     #if ($swaggerStatus==1)
     @ApiOperation("修改")
-    @RequestMapping("/updateById")
+    @PostMapping("/updateById")
     #else
     /**
      * 修改
      */
-    @RequestMapping("/updateById")
+    @PostMapping("/updateById")
     #end
     @ResponseBody
     public RespVo updateById(@RequestBody ${className}Entity entity){
         ${variableClassName}Service.updateById(entity);
         return RespVo.success();
     }
+    #if ($swaggerStatus==1)
+    @ApiOperation("根据id删除")
+    @PostMapping("/deleteById")
+    #else
+    /**
+     *  根据id删除
+     */
+    @PostMapping("/deleteById")
+    #end
+    @ResponseBody
+    public RespVo deleteById(Long id){
+        ${variableClassName}Service.deleteById(id);
+        return RespVo.success();
+    }
 
 
     #if ($swaggerStatus==1)
     @ApiOperation("批量删除")
-    @RequestMapping("/deleteByIds")
+    @PostMapping("/deleteByIds")
     #else
     /**
      * 批量删除
      */
-    @RequestMapping("/deleteByIds")
+    @PostMapping("/deleteByIds")
     #end
     @ResponseBody
     public RespVo delete(@RequestBody Long[] ids){
