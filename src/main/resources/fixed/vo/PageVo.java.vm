@@ -7,15 +7,26 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class PageVo {
+public class PageVo<T> {
 
 
-    private List<?> data;
+    private List<T> data;
 
     private long iTotalDisplayRecords;
 
+    public List<T> getData() {
+        return data;
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
+    }
+
+    public long getiTotalDisplayRecords() {
+        return iTotalDisplayRecords;
+    }
+
+    public void setiTotalDisplayRecords(long iTotalDisplayRecords) {
+        this.iTotalDisplayRecords = iTotalDisplayRecords;
+    }
 }

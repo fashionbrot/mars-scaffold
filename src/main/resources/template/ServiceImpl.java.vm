@@ -62,10 +62,11 @@ public class ${className}ServiceImpl implements ${className}Service {
     public PageVo pageList(${className}Req req){
         Page<?> page= PageHelper.startPage((req.getStart() / req.getLength()) + 1, req.getLength());
         List<${className}Entity> list = ${variableClassName}Dao.selectList(null);
-        return PageVo.builder()
-                .data(list)
-                .iTotalDisplayRecords(page.getTotal())
-                .build();
+
+        PageVo<${className}Entity> pageVo =new PageVo<>();
+        pageVo.setData(list);
+        pageVo.setiTotalDisplayRecords(page.getTotal());
+        return pageVo;
     }
 
 
