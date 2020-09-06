@@ -25,7 +25,14 @@ public interface ${className}Service  {
      * @param params
      * @return
      */
-    List<${className}Entity> queryList(Map<String, Object> params);
+    Collection<${className}Entity> queryList(Map<String, Object> params);
+
+    /**
+     * 根据 map 查询
+     * @param params
+     * @return
+     */
+    Collection<${className}Entity> ${variableClassName}ByMap(Map<String, Object> params);
 
     /**
      * 分页查询
@@ -135,7 +142,7 @@ public interface ${className}Service  {
      *
      * @param columnMap 表字段 map 对象
      */
-    int deleteByMap(Map<String, Object> columnMap);
+    boolean deleteByMap(Map<String, Object> columnMap);
 
     /**
      * <p>
@@ -144,5 +151,5 @@ public interface ${className}Service  {
      *
      * @param queryWrapper 实体对象封装操作类（可以为 null）
      */
-    int delete(Wrapper<${className}Entity> queryWrapper);
+    boolean delete(Wrapper<${className}Entity> queryWrapper);
 }

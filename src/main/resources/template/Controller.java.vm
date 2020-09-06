@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
+import java.util.Collection;
 
 
 /**
@@ -71,7 +72,7 @@ public class ${className}Controller {
     @GetMapping("/queryList")
     #end
     @ResponseBody
-    public List<${className}Entity> queryList(@RequestParam Map<String, Object> params){
+    public Collection<${className}Entity> queryList(@RequestParam Map<String, Object> params){
         return  ${variableClassName}Service.queryList(params);
     }
 

@@ -2,10 +2,7 @@ package ${package}.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 /**
@@ -18,34 +15,34 @@ public abstract class BaseEntity implements Serializable {
     /**
      * id
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 创建者
      */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(value = "create_id",fill = FieldFill.INSERT)
     private Long createId;
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(value="create_date",fill = FieldFill.INSERT)
     private Date createDate;
 
     /**
      * 更新者
      */
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(value = "update_id",fill = FieldFill.UPDATE)
     private Long updateId;
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.UPDATE)
+    @TableField(value = "update_date",fill = FieldFill.UPDATE)
     private Date updateDate;
 
     /**
     * 删除标识 0：未删除 1：删除
     */
-    @TableField(fill = FieldFill.INSERT)
     @TableLogic(value = "0", delval = "1")
+    @TableField(value = "del_flag",fill = FieldFill.INSERT)
     private Integer delFlag;
 }

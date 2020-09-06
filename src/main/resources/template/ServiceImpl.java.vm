@@ -41,8 +41,8 @@ public class ${className}ServiceImpl implements ${className}Service {
     private ${className}Dao ${variableClassName}Dao;
 
     @Override
-    public List<${className}Entity> queryList(Map<String, Object> params) {
-        return ${variableClassName}Dao.selectByMap(params);
+    public Collection<${className}Entity> queryList(Map<String, Object> params) {
+        return ${variableClassName}Dao.listByMap(params);
     }
 
     /**
@@ -50,8 +50,8 @@ public class ${className}ServiceImpl implements ${className}Service {
      * @param params 查询条件
      * @return List<${className}Entity>
      */
-    public List<${className}Entity> ${className}List(Map<String, Object> params){
-        return ${variableClassName}Dao.selectByMap(params);
+    public Collection<${className}Entity> ${variableClassName}ByMap(Map<String, Object> params){
+        return ${variableClassName}Dao.listByMap(params);
     }
 
     /**
@@ -61,7 +61,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     */
     public PageVo pageList(${className}Req req){
         Page<?> page= PageHelper.startPage((req.getStart() / req.getLength()) + 1, req.getLength());
-        List<${className}Entity> list = ${variableClassName}Dao.selectList(null);
+        List<${className}Entity> list = ${variableClassName}Dao.list(null);
 
         return PageVo.builder()
                 .data(list)
@@ -72,7 +72,7 @@ public class ${className}ServiceImpl implements ${className}Service {
 
     @Override
     public void insert(${className}Entity entity) {
-        if(${variableClassName}Dao.insert(entity)!=1){
+        if(!${variableClassName}Dao.save(entity)){
             throw new CurdException(RespCode.SAVE_ERROR);
         }
     }
@@ -80,7 +80,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean insertBatch(Collection<${className}Entity> entityList) {
-        return ${variableClassName}Dao.insertBatch(entityList,30);
+        return ${variableClassName}Dao.saveBatch(entityList,30);
     }
 
     /**
@@ -93,7 +93,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean insertBatch(Collection<${className}Entity> entityList, int batchSize) {
-        return ${variableClassName}Dao.insertBatch(entityList,batchSize);
+        return ${variableClassName}Dao.saveBatch(entityList,batchSize);
     }
 
     @Override
@@ -124,12 +124,12 @@ public class ${className}ServiceImpl implements ${className}Service {
 
     @Override
     public ${className}Entity selectById(Serializable id) {
-        return ${variableClassName}Dao.selectById(id);
+        return ${variableClassName}Dao.getById(id);
     }
 
     @Override
     public void deleteById(Serializable id) {
-        if(${variableClassName}Dao.deleteById(id)!=1){
+        if(!${variableClassName}Dao.removeById(id)){
             throw new CurdException(RespCode.DELETE_ERROR);
         }
     }
@@ -138,21 +138,21 @@ public class ${className}ServiceImpl implements ${className}Service {
     @Transactional(rollbackFor = Exception.class)
     public void deleteBatchIds(Collection<? extends Serializable> idList) {
         if (CollectionUtils.isNotEmpty(idList)){
-            int result = ${variableClassName}Dao.deleteBatchIds(idList);
-            if (idList.size()!=result){
+            boolean result = ${variableClassName}Dao.removeByIds(idList);
+            if (!result){
                 throw new CurdException(RespCode.DELETE_ERROR);
             }
         }
     }
 
     @Override
-    public int deleteByMap(Map<String, Object> columnMap) {
-        return ${variableClassName}Dao.deleteByMap(columnMap);
+    public boolean deleteByMap(Map<String, Object> columnMap) {
+        return ${variableClassName}Dao.removeByMap(columnMap);
     }
 
     @Override
-    public int delete(Wrapper<${className}Entity> queryWrapper) {
-        return ${variableClassName}Dao.delete(queryWrapper);
+    public boolean delete(Wrapper<${className}Entity> queryWrapper) {
+        return ${variableClassName}Dao.remove(queryWrapper);
     }
 
 

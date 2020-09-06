@@ -69,8 +69,8 @@
 
                             <div class="pull-right" style="margin-right: 1rem;">
                                 <div class="btn-group" style="width: 20px" >&nbsp;</div>
-                                全选：<input type="checkbox"  id="checkAll" />
-                                <input id="tableName" type="text" style="width: 150px;display: inline" class="form-control" placeholder="请输入要查询的表名" />
+                                <!--全选：<input type="checkbox"  id="checkAll" />-->
+                                <input id="tableName" type="text" style="width: 150px;display: inline" class="form-control" placeholder="表名模糊查询" />
                                 <button type="button" class="btn btn-success dropdown-toggle"
                                         onclick="loadData()">
 
@@ -93,10 +93,14 @@
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table id="dataTables-userInfo" class="table datatable">
+                                <table id="dataTableId" class="table datatable">
                                     <thead>
                                         <tr>
-                                            <th width="2%"></th>
+                                            <th >
+                                                <div class=" td-checkbox">
+                                                    <input type="checkbox" name="topCheckboxName" class="group-checkable" />
+                                                </div>
+                                            </th>
                                             <th width="10%">表名</th>
                                             <th width="10%">表备注</th>
                                             <th width="15%">创建时间</th>

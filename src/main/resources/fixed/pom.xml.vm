@@ -24,7 +24,7 @@
         <mybatis.spring.boot.version>2.1.2</mybatis.spring.boot.version>
         <pagehelper.spring.boot.version>1.2.13</pagehelper.spring.boot.version>
         <fastjson.version>1.2.70</fastjson.version>
-        <mybatisplus.version>3.3.2</mybatisplus.version>
+        <mybatis.plus.boot.version>3.0.5</mybatis.plus.boot.version>
     </properties>
 
     <dependencies>
@@ -57,7 +57,7 @@
         <dependency>
           <groupId>com.baomidou</groupId>
           <artifactId>mybatis-plus-boot-starter</artifactId>
-          <version>${mybatisplus.version}</version>
+          <version>${mybatis.plus.boot.version}</version>
           <exclusions>
             <exclusion>
               <groupId>com.baomidou</groupId>

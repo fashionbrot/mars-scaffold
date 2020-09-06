@@ -36,17 +36,9 @@ $(document).ready(function () {
 
     loadData();
 
-       /*$("#checkAll").on("change", function () {
-            if (this.checked) {
-                $("#dataTables-userInfo .odd").find("input").attr("checked","checked");
-                $("#dataTables-userInfo .even").find("input").attr("checked","checked");
-            } else {
-                $("#dataTables-userInfo .odd").find("input").attr("checked",false);
-                $("#dataTables-userInfo .even").find("input").attr("checked",false);
-            }
-        });*/
 
-    $("#checkAll").on("click", function () {
+
+    /*$("#checkAll").on("click", function () {
         if (this.checked) {
             $(this).attr('checked', 'checked')
             $("input[name='abced']").each(function () {
@@ -59,7 +51,7 @@ $(document).ready(function () {
 
             });
         }
-    });
+    });*/
 
 $("#swaggerStatus").on("click",function (){
     if (this.checked) {
@@ -101,13 +93,14 @@ $("#swaggerStatus").on("click",function (){
 
 function code() {
     var tables ="";
-    $("input[name='abced']:checked").each(function(i){
+    $("input[name='listId']:checked").each(function(i){
         if (tables==""){
             tables=$(this).attr("data");
         }else{
             tables+=","+$(this).attr("data");
         }
     })
+
     if (tables==""){
         alert("请选择")
         return false;
@@ -142,6 +135,7 @@ function code() {
         }
     });*/
 }
+/*
 
 function loadData() {
     var tableName=$("#tableName").val();
@@ -183,6 +177,119 @@ function loadData() {
                 }
             }
         ]
+    });
+
+}*/
+
+
+function loadData() {
+
+    var tableId = "#dataTableId";
+    $(tableId).dataTable().fnDestroy();
+    $(tableId)
+        .on('xhr.dt', function( e, settings, json, xhr ){
+            if (json.data!=null && json.data.length>0){
+                //将后台总数，赋值给 分页工具
+                json.recordsTotal = json.itotalDisplayRecords;
+                json.recordsFiltered = json.itotalDisplayRecords;
+            }else{
+                json.recordsTotal=0;
+                json.recordsFiltered =0;
+            }
+        })
+        .DataTable({
+            ajax:{
+                url: "./scaffold/list?v="+new Date().getTime(),
+                type: "post",
+                dataType: "json",
+                data: function(data){
+                    data.page = data.start / data.length + 1;
+                    data.pageSize = data.length;
+                    data.tableName = $("#tableName").val();
+                    delete  data.columns;
+                    delete  data.search;
+                },
+                dataType: "json",
+                dataSrc : function(result) {
+                    /*if (result.code != 0) {
+                        alert("获取数据失败:"+result.msg);
+                        return false;
+                    }*/
+                    return  result.data ;
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("获取列表失败");
+                }
+            },
+            dom: '<fB<t>ip>',
+            stripeClasses: ["odd", "even"],
+            paginationType: "full_numbers",
+            responsive: true,//自适应
+            serverSide:true,
+            language: dataTable.language(),
+            stateSave: true,
+            searching: false,
+            paging: true,
+            info: true,
+            bAutoWidth: false,
+            order:[],
+            orderable: true,
+            lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "All"]],
+            columns : [
+                {
+                    className: "td-checkbox",
+                    orderable : false,
+                    bSortable : false,
+                    data : "id",
+                    width : '10px',
+                    render : function(data, type, row, meta) {
+                        var content = '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">';
+                        content += '	<input type="checkbox" name="listId" class="group-checkable" data="'+row.tableName+'" value="' + data + '" />';
+                        content += '	<span></span>';
+                        content += '</label>';
+                        return content;
+                    }
+                },
+                {
+                    data : 'tableName',
+                    bSortable : true,
+                    width : "25px",
+                    className : "text-center",
+                    render : dataTableConfig.DATA_TABLES.RENDER.ELLIPSIS
+                },
+                {
+                    data : 'comments',
+                    bSortable : true,
+                    width : "20px",
+                    className : "text-center",
+                    render : dataTableConfig.DATA_TABLES.RENDER.ELLIPSIS
+                },{
+                    data : 'createTime',
+                    bSortable : true,
+                    width : "20px",
+                    render : dataTableConfig.DATA_TABLES.RENDER.ELLIPSIS
+                }
+            ]
+        });
+    $(tableId+'_wrapper').on("change", ":checkbox", function() {
+        // 列表复选框
+        if ($(this).is("[name='topCheckboxName']")) {
+            // 全选
+            $(":checkbox", '#dataTableId').prop("checked",$(this).prop("checked"));
+        }else{
+            // 一般复选
+            var checkbox = $("tbody :checkbox", '#dataTableId');
+            $(":checkbox[name='cb-check-all']", '#dataTableId').prop('checked', checkbox.length == checkbox.filter(':checked').length);
+        }
+    }).on('preXhr.dt', function(e, settings, data) {
+        // ajax 请求之前事件
+        data.page = data.start / data.length + 1;
+        data.limit = data.length;
+        delete data.start;
+        delete data.order;
+        delete data.search;
+        delete data.length;
+        delete data.columns;
     });
 
 }

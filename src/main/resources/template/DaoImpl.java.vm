@@ -1,14 +1,10 @@
 package ${package}.dao.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import ${package}.dao.${className}Dao;
 import ${package}.entity.${className}Entity;
 import ${package}.mapper.${className}Mapper;
@@ -19,96 +15,6 @@ public class ${className}DaoImpl  extends ServiceImpl<${className}Mapper,${class
     @Autowired
     private ${className}Mapper ${variableClassName}Mapper;
 
-    @Override
-    public int insert(${className}Entity entity) {
-        return ${variableClassName}Mapper.insert(entity);
-    }
-
-    @Override
-    public boolean insertBatch(Collection<${className}Entity> entityList) {
-        return super.saveBatch(entityList);
-    }
-
-    @Override
-    public boolean insertBatch(Collection<${className}Entity> entityList, int batchSize) {
-        return super.saveBatch(entityList,batchSize);
-    }
-
-
-    public boolean updateById(${className}Entity entity){
-        return super.updateById(entity);
-    }
-
-
-    public boolean update(${className}Entity entity, Wrapper<${className}Entity> updateWrapper){
-        return super.update(entity,updateWrapper);
-    }
-
-
-    @Override
-    public boolean updateBatchById(Collection<${className}Entity> entityList) {
-        return super.saveOrUpdateBatch(entityList);
-    }
-
-    @Override
-    public boolean updateBatchById(Collection<${className}Entity> entityList, int batchSize) {
-        return super.saveOrUpdateBatch(entityList,batchSize);
-    }
-
-    @Override
-    public ${className}Entity selectById(Serializable id) {
-        return ${variableClassName}Mapper.selectById(id);
-    }
-
-    @Override
-    public int deleteById(Serializable id) {
-        return ${variableClassName}Mapper.deleteById(id);
-    }
-
-    @Override
-    public int deleteBatchIds(Collection<? extends Serializable> idList) {
-        return ${variableClassName}Mapper.deleteBatchIds(idList);
-    }
-
-    @Override
-    public int deleteByMap(Map<String, Object> columnMap) {
-        return ${variableClassName}Mapper.deleteByMap(columnMap);
-    }
-
-    @Override
-    public int delete(Wrapper<${className}Entity> queryWrapper) {
-        return ${variableClassName}Mapper.delete(queryWrapper);
-    }
-
-    @Override
-    public List<${className}Entity> selectBatchIds(Collection<? extends Serializable> idList) {
-        return ${variableClassName}Mapper.selectBatchIds(idList);
-    }
-
-    @Override
-    public List<${className}Entity> selectByMap(Map<String, Object> columnMap) {
-        return ${variableClassName}Mapper.selectByMap(columnMap);
-    }
-
-    @Override
-    public ${className}Entity selectOne(Wrapper<${className}Entity> queryWrapper) {
-        return ${variableClassName}Mapper.selectOne(queryWrapper);
-    }
-
-    @Override
-    public Integer selectCount(Wrapper<${className}Entity> queryWrapper) {
-        return ${variableClassName}Mapper.selectCount(queryWrapper);
-    }
-
-    @Override
-    public List<${className}Entity> selectList(Wrapper<${className}Entity> queryWrapper) {
-        return ${variableClassName}Mapper.selectList(queryWrapper);
-    }
-
-    @Override
-    public List<Map<String, Object>> selectMaps(Wrapper<${className}Entity> queryWrapper) {
-        return ${variableClassName}Mapper.selectMaps(queryWrapper);
-    }
 
 
 }

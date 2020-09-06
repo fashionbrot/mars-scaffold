@@ -55,6 +55,8 @@ public class ScaffoldUtil {
         Map<String,String> map=new HashMap<>();
         map.put(packagePath+File.separator+"entity"+File.separator+"BaseEntity.java","fixed/BaseEntity.java.vm");
         map.put(packagePath+File.separator+"config"+File.separator+"GlobalExceptionHandler.java","fixed/config/GlobalExceptionHandler.java.vm");
+        map.put(packagePath+File.separator+"config"+File.separator+"FieldMetaObjectHandler.java","fixed/config/FieldMetaObjectHandler.java.vm");
+        map.put(packagePath+File.separator+"config"+File.separator+"MyBatisPlusConfig.java","fixed/config/MyBatisPlusConfig.java.vm");
         map.put(packagePath+File.separator+"consts"+File.separator+"GlobalConst.java","fixed/consts/GlobalConst.java.vm");
         map.put(packagePath+File.separator+"enums"+File.separator+"RespCode.java","fixed/enums/RespCode.java.vm");
         map.put(packagePath+File.separator+"exception"+File.separator+"CurdException.java","fixed/exception/CurdException.java.vm");
@@ -95,7 +97,7 @@ public class ScaffoldUtil {
 
         boolean hasBigDecimal = false;
         //表名转换成Java类名
-        String className = tableToJava(tableEntity.getTableName(), config.getProperty("tablePrefix"));
+        String className = tableToJava(tableEntity.getTableName(), req.getExcludePrefix());
         tableEntity.setClassName(className);
         tableEntity.setVariableClassName(StringUtils.uncapitalize(className));
 
