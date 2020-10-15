@@ -6,9 +6,9 @@ import lombok.Data;
 public class PageReq {
 
     //当前页码n
-    private int start;
+    private int page;
     //每页条数
-    private int length;
+    private int pageSize;
 
     private String tableName;
 }

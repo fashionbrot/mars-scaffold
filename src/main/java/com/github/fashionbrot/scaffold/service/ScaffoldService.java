@@ -30,7 +30,7 @@ public class ScaffoldService {
     private ScaffoldUtil scaffoldUtil;
 
     public PageVo queryList(PageReq req) {
-        Page<?> page = PageHelper.startPage((req.getStart() / req.getLength()) + 1, req.getLength());
+        Page<?> page = PageHelper.startPage(req.getPage(),req.getPageSize());
         Map<String,Object> map=new HashMap();
 
         map.put("tableName",req.getTableName());
