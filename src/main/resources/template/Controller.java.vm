@@ -57,8 +57,8 @@ public class ${className}Controller {
     @GetMapping("/page")
     #end
     @ResponseBody
-    public PageVo page(${className}Req req){
-        return  ${variableClassName}Service.pageList(req);
+    public RespVo page(${className}Req req){
+        return  RespVo.success(${variableClassName}Service.pageList(req));
     }
 
 
