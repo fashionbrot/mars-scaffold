@@ -47,6 +47,12 @@ public class ${className}Controller {
     private ${className}Service ${variableClassName}Service;
 
 
+    @GetMapping("/index")
+    public String index(){
+        return "/${variableClassName}Index";
+    }
+
+
     #if ($swaggerStatus==1)
     @ApiOperation("数据列表—分页")
     @GetMapping("/page")
