@@ -18,7 +18,7 @@ public class PageReq {
      * 当前页码
      */
     #end
-    private Integer page;
+    private Integer pageNum;
     #if ($swaggerStatus==1)
     @ApiModelProperty(value = "每页条数")
     #else
