@@ -41,6 +41,8 @@ public class ScaffoldUtil {
         templates.add("template/Controller.java.vm");
         templates.add("template/DTO.java.vm");
         templates.add("template/Req.java.vm");
+        templates.add("template/index.html.vm");
+        templates.add("template/index.js.vm");
         return templates;
     }
 
@@ -283,6 +285,15 @@ public class ScaffoldUtil {
     public  String getFileName(String template, String className,CodeReq req) {
         String packagePath =getPackagePath(req);
 
+        String resource =getResource(req.getProjectName());
+        if(template.contains("index.html.vm")){
+            return resource+File.separator+"templates"+File.separator+firstToLowerCaseName(className)+"Index.html";
+        }
+        if(template.contains("index.js.vm")){
+            return resource+File.separator+"static"+File.separator+"js"+File.separator+firstToLowerCaseName(className)+".js";
+        }
+
+
         if (template.contains("Entity.java.vm" )) {
             return packagePath + "entity" + File.separator + className + "Entity.java";
         }
@@ -318,6 +329,10 @@ public class ScaffoldUtil {
             return packagePath + File.separator + "mapper" + File.separator + "xml" + File.separator + className + "Mapper.xml";
         }
 
+        if (template.contains("Mapper.xml.vm" )) {
+            return packagePath + File.separator + "mapper" + File.separator + "xml" + File.separator + className + "Mapper.xml";
+        }
+
         return null;
     }
     /**
@@ -333,6 +348,25 @@ public class ScaffoldUtil {
             return String.valueOf(cs);
         }
         return "";
+    }
+
+    /**
+     * 将字符串的首字母转小写
+     * @param str 需要转换的字符串
+     * @return
+     */
+    private static String firstToLowerCaseName(String str) {
+        if (StringUtils.isNotBlank(str)) {
+            // 进行字母的ascii编码前移，效率要高于截取字符串进行转换的操作
+            char[] cs = str.toCharArray();
+            cs[0] += 32;
+            return String.valueOf(cs);
+        }
+        return "";
+    }
+
+    public static void main(String[] args) {
+        System.out.println(firstToLowerCaseName("ABC"));
     }
 
 }
