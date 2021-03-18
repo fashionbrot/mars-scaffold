@@ -1,10 +1,13 @@
 package ${package}.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.util.Date;
 import lombok.Data;
-
 /**
  * 基础实体类
  */
@@ -12,37 +15,28 @@ import lombok.Data;
 public abstract class BaseEntity implements Serializable {
     private static final long serialVersionUID = -1720420392839192028L;
 
-    /**
-     * id
-     */
     @TableId(type = IdType.AUTO)
     private Long id;
-    /**
-     * 创建者
-     */
+
     @TableField(value = "create_id",fill = FieldFill.INSERT)
     private Long createId;
-    /**
-     * 创建时间
-     */
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(value="create_date",fill = FieldFill.INSERT)
     private Date createDate;
 
-    /**
-     * 更新者
-     */
     @TableField(value = "update_id",fill = FieldFill.UPDATE)
     private Long updateId;
-    /**
-     * 更新时间
-     */
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(value = "update_date",fill = FieldFill.UPDATE)
     private Date updateDate;
 
-    /**
-    * 删除标识 0：未删除 1：删除
-    */
+
     @TableLogic(value = "0", delval = "1")
     @TableField(value = "del_flag",fill = FieldFill.INSERT)
-    private Integer delFlag;
+    private int delFlag;
+
 }

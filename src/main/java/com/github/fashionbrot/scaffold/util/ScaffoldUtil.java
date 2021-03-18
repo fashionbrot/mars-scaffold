@@ -65,11 +65,16 @@ public class ScaffoldUtil {
         map.put(packagePath+File.separator+"util"+File.separator+"ConvertUtils.java","fixed/util/ConvertUtils.java.vm");
         map.put(packagePath+File.separator+"req"+File.separator+"PageReq.java","fixed/req/PageReq.java.vm");
 
+
+        map.put(packagePath+File.separator+"annotation"+File.separator+"MarsPermission.java","fixed/annotation/MarsPermission.java.vm");
+        map.put(packagePath+File.separator+"controller"+File.separator+"BaseController.java", "fixed/controller/BaseController.java.vm");
+
         if (req.getSwaggerStatus()==1){
              map.put(packagePath+File.separator+"config"+File.separator+"SwaggerConfig.java","fixed/config/SwaggerConfig.java.vm");
         }
         map.put(packagePath+File.separator+"Application.java","fixed/Application.java.vm");
         map.put(projectName+File.separator+"pom.xml","fixed/pom.xml.vm");
+
 
         String resource =getResource(projectName);
         map.put(resource+File.separator+"application.properties","fixed/application.properties.vm");
