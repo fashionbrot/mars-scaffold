@@ -44,7 +44,7 @@ import java.util.Collection;
 @Api(tags="${commentsApi}")
 @ApiSort(${apiSort})
 #end
-public class ${className}Controller extends BaseController<${className}Service,${className}Entity,${className}Req>  {
+public class ${className}Controller extends BaseController<${className}Service,${className}Entity>  {
     /**
     @Autowired
     private ${className}Service ${variableClassName}Service;
@@ -62,6 +62,13 @@ public class ${className}Controller extends BaseController<${className}Service,$
      * 多个id删除  ${pathName}/deleteByIds 权限：${permissionPrefix}:deleteByIds
      */
 
+    @MarsPermission(":page")
+    @ApiOperation("数据列表—分页")
+    @GetMapping("/page")
+    @ResponseBody
+    public RespVo pageReq(${className}Req req) {
+        return RespVo.success(service.pageReq(req));
+    }
 
 
 

@@ -64,12 +64,13 @@ public class ScaffoldUtil {
         map.put(packagePath+File.separator+"exception"+File.separator+"CurdException.java","fixed/exception/CurdException.java.vm");
         map.put(packagePath+File.separator+"vo"+File.separator+"RespVo.java","fixed/vo/RespVo.java.vm");
         map.put(packagePath+File.separator+"vo"+File.separator+"PageVo.java","fixed/vo/PageVo.java.vm");
-        map.put(packagePath+File.separator+"util"+File.separator+"ConvertUtils.java","fixed/util/ConvertUtils.java.vm");
+        map.put(packagePath+File.separator+"util"+File.separator+"ConvertUtil.java", "fixed/util/ConvertUtil.java.vm");
         map.put(packagePath+File.separator+"req"+File.separator+"PageReq.java","fixed/req/PageReq.java.vm");
 
         map.put(packagePath+File.separator+"service"+File.separator+"BaseService.java","fixed/service/BaseService.java.vm");
         map.put(packagePath+File.separator+"service"+File.separator+"impl"+File.separator+"BaseServiceImpl.java","fixed/service/BaseServiceImpl.java.vm");
 
+        map.put(packagePath+File.separator+"annotation"+File.separator+"ToMapIgnore.java","fixed/annotation/ToMapIgnore.java.vm");
         map.put(packagePath+File.separator+"annotation"+File.separator+"MarsPermission.java","fixed/annotation/MarsPermission.java.vm");
         map.put(packagePath+File.separator+"controller"+File.separator+"BaseController.java", "fixed/controller/BaseController.java.vm");
 

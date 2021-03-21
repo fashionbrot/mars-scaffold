@@ -11,8 +11,10 @@ import ${package}.service.${className}Service;
 import ${package}.req.${className}Req;
 import ${package}.vo.PageVo;
 import ${package}.enums.RespCode;
+import ${package}.vo.RespVo;
 import ${package}.exception.CurdException;
 import ${package}.service.impl.BaseServiceImpl;
+import ${package}.util.ConvertUtil;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -38,6 +40,16 @@ public class ${className}ServiceImpl  extends BaseServiceImpl<${className}Mapper
     @Autowired
     private ${className}Dao ${variableClassName}Dao;
 
+    @Override
+    public Object pageReq(${className}Req req) {
+        Page<?> page = PageHelper.startPage(req.getPageNum(),req.getPageSize());
+        Map<String,Object> map = ConvertUtil.toMap(req);
+        List<${className}Entity> listByMap = baseMapper.selectByMap(map);
 
+        return RespVo.success(PageVo.builder()
+                .rows(listByMap)
+                .total(page.getTotal())
+                .build());
+    }
 
 }
