@@ -45,9 +45,10 @@ import java.util.Collection;
 @ApiSort(${apiSort})
 #end
 public class ${className}Controller extends BaseController<${className}Service,${className}Entity,${className}Req>  {
-
+    /**
     @Autowired
     private ${className}Service ${variableClassName}Service;
+     */
 
     /**
      * 权限 注解 MarsPermission

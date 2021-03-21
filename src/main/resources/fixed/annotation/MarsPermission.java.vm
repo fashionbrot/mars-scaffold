@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * 权限注解
  */
 @Documented
-@Target({ ElementType.METHOD})
+@Target({ ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MarsPermission {
 

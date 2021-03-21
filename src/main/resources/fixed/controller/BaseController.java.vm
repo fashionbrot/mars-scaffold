@@ -16,10 +16,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-public abstract class BaseController<S extends IService<T>, T ,R extends PageReq> {
+public  class BaseController<S extends IService<T>, T ,R extends PageReq> {
 
     @Autowired
-    private S service;
+    public S service;
 
 
     @MarsPermission(":page")
