@@ -1,4 +1,4 @@
-package ${package}.controller;
+package ${package}.controller  ;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.Page;
@@ -16,14 +16,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-public class BaseController<S extends IService<T>, T ,R extends PageReq> {
+public abstract class BaseController<S extends IService<T>, T ,R extends PageReq> {
 
     @Autowired
     private S service;
 
 
-
-    @MarsPermission("/page")
+    @MarsPermission(":page")
     @ApiOperation("数据列表—分页")
     @GetMapping("/page")
     @ResponseBody
@@ -37,7 +36,7 @@ public class BaseController<S extends IService<T>, T ,R extends PageReq> {
     }
 
 
-    @MarsPermission("/queryList")
+    @MarsPermission(":queryList")
     @ApiOperation("数据列表")
     @GetMapping("/queryList")
     @ResponseBody
@@ -46,7 +45,7 @@ public class BaseController<S extends IService<T>, T ,R extends PageReq> {
     }
 
 
-    @MarsPermission("/selectById")
+    @MarsPermission(":selectById")
     @ApiOperation("根据id查询")
     @PostMapping("/selectById")
     @ResponseBody
@@ -55,7 +54,7 @@ public class BaseController<S extends IService<T>, T ,R extends PageReq> {
         return RespVo.success(data);
     }
 
-    @MarsPermission("/insert")
+    @MarsPermission(":insert")
     @ApiOperation("新增")
     @PostMapping("/insert")
     @ResponseBody
@@ -65,7 +64,7 @@ public class BaseController<S extends IService<T>, T ,R extends PageReq> {
     }
 
 
-    @MarsPermission("/updateById")
+    @MarsPermission(":updateById")
     @ApiOperation("修改")
     @PostMapping("/updateById")
     @ResponseBody
@@ -75,7 +74,7 @@ public class BaseController<S extends IService<T>, T ,R extends PageReq> {
     }
 
 
-    @MarsPermission("/deleteById")
+    @MarsPermission(":deleteById")
     @ApiOperation("根据id删除")
     @PostMapping("/deleteById")
     @ResponseBody
@@ -85,7 +84,7 @@ public class BaseController<S extends IService<T>, T ,R extends PageReq> {
     }
 
 
-    @MarsPermission("/deleteByIds")
+    @MarsPermission(":deleteByIds")
     @ApiOperation("批量删除")
     @PostMapping("/deleteByIds")
     @ResponseBody

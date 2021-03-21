@@ -10,6 +10,7 @@ import ${package}.req.${className}Req;
 import ${package}.vo.PageVo;
 import ${package}.vo.RespVo;
 import ${package}.controller.BaseController;
+import ${package}.annotation.MarsPermission;
 #if ($swaggerStatus==1)
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -36,6 +37,7 @@ import java.util.Collection;
  * @date ${date}
  */
 
+@MarsPermission(value="${permissionPrefix}")
 @Controller
 @RequestMapping("${pathName}")
 #if ($swaggerStatus==1)
@@ -46,6 +48,19 @@ public class ${className}Controller extends BaseController<${className}Service,$
 
     @Autowired
     private ${className}Service ${variableClassName}Service;
+
+    /**
+     * 权限 注解 MarsPermission
+     * 默认接口以下
+     * 分页       ${pathName}/page        权限：${permissionPrefix}:page
+     * 数据列表    ${pathName}/queryList   权限：${permissionPrefix}:queryList
+     * 根据id查询  ${pathName}/selectById  权限：${permissionPrefix}:selectById
+     * 新增       ${pathName}/insert      权限：${permissionPrefix}:insert
+     * 修改       ${pathName}/updateById  权限：${permissionPrefix}:updateById
+     * 根据id删除  ${pathName}/deleteById  权限：${permissionPrefix}:deleteById
+     * 多个id删除  ${pathName}/deleteByIds 权限：${permissionPrefix}:deleteByIds
+     */
+
 
 
 

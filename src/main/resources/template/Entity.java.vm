@@ -1,9 +1,10 @@
 package ${package}.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.io.Serializable;
+
 
 import ${package}.entity.BaseEntity;
 import lombok.Data;
@@ -30,26 +31,39 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @TableName("${oldTableName}")
-public class ${className}Entity extends BaseEntity {
-	private static final long serialVersionUID = 1L;
+public class ${className}Entity implements Serializable {
+
 
 #foreach ($column in $columns)
-#if($column.columnName != 'ID' && $column.columnName != 'id'
-	&& $column.columnName != 'DEL_FLAG' &&  $column.columnName != 'del_flag'
-	&& $column.columnName != 'CREATE_ID'  && $column.columnName != 'create_id'
-	&& $column.columnName != 'CREATE_DATE'&& $column.columnName != 'create_date'
-	&& $column.columnName != 'UPDATE_ID' && $column.columnName != 'update_id'
-	&& $column.columnName != 'UPDATE_DATE'&& $column.columnName != 'update_date')
 
-	#if ($swaggerStatus==1)
+	#if($column.columnName == 'ID' || $column.columnName == 'id')
 	@ApiModelProperty(value = "$column.comments")
+	@TableId(type = IdType.AUTO)
+	private $column.attrType $column.variableAttrName;
+	#elseif($column.columnName == 'CREATE_DATE' || $column.columnName == 'create_date')
+	@ApiModelProperty(value = "$column.comments")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+	@TableField(value="${column.columnName}",fill = FieldFill.INSERT)
+	private $column.attrType $column.variableAttrName;
+	#elseif($column.columnName == 'UPDATE_DATE'|| $column.columnName == 'update_date')
+	@ApiModelProperty(value = "$column.comments")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+	@TableField(value="${column.columnName}",fill = FieldFill.UPDATE)
+	private $column.attrType $column.variableAttrName;
+	#elseif($column.columnName == 'DEL_FLAG' ||  $column.columnName == 'del_flag')
+	@ApiModelProperty(value = "$column.comments")
+	@TableLogic(value = "0", delval = "1")
+	@TableField(value = "${column.columnName}",fill = FieldFill.INSERT)
+	private $column.attrType $column.variableAttrName;
 	#else
-	/**
-	 * $column.comments
-	 */
-	#end
+	@ApiModelProperty(value = "$column.comments")
 	@TableField("${column.columnName}")
 	private $column.attrType $column.variableAttrName;
+	#end
+
 #end
-#end
+
+
 }

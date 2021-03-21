@@ -185,6 +185,7 @@ public class ScaffoldUtil {
         if(StringUtils.isNotBlank(tableEntity.getTableName())){
             String tableName = StringUtils.lowerCase(tableEntity.getTableName());
             map.put("pathName", tableName.replace("_","/"));
+            map.put("permissionPrefix", tableName.replace("_",":"));
 
             // 前端权限标识
             map.put("apiPermission", tableName.replace("_",":"));
