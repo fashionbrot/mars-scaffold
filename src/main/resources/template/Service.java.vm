@@ -6,6 +6,7 @@ import ${package}.dto.${className}DTO;
 import ${package}.entity.${className}Entity;
 import ${package}.req.${className}Req;
 import ${package}.vo.PageVo;
+import ${package}.service.BaseService;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Collection;
  * @email ${email}
  * @date ${date}
  */
-public interface ${className}Service  extends IService<${className}Entity>{
+public interface ${className}Service  extends BaseService<${className}Entity>{
 
 
 }
