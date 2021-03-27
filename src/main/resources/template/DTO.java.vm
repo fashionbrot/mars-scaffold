@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 @ApiModel(value = "${commentsEntity}")
 #end
 public class ${className}DTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+
 
 	#foreach ($column in $columns)
 	#if ($swaggerStatus==1)
