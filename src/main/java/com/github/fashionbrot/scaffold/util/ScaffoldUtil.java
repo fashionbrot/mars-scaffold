@@ -41,8 +41,8 @@ public class ScaffoldUtil {
         templates.add("template/Controller.java.vm");
         templates.add("template/DTO.java.vm");
         templates.add("template/Req.java.vm");
-        templates.add("template/index.html.vm");
-        templates.add("template/index.js.vm");
+        /*templates.add("template/index.html.vm");
+        templates.add("template/index.js.vm");*/
         return templates;
     }
 
