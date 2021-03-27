@@ -290,12 +290,12 @@ public class ScaffoldUtil {
         String packagePath =getPackagePath(req);
 
         String resource =getResource(req.getProjectName());
-        if(template.contains("index.html.vm")){
+        /*if(template.contains("index.html.vm")){
             return resource+File.separator+"templates"+File.separator+firstToLowerCaseName(className)+"Index.html";
         }
         if(template.contains("index.js.vm")){
             return resource+File.separator+"static"+File.separator+"js"+File.separator+firstToLowerCaseName(className)+".js";
-        }
+        }*/
 
 
         if (template.contains("Entity.java.vm" )) {
