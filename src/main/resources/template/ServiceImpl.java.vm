@@ -38,7 +38,7 @@ import java.util.Map;
 public class ${className}ServiceImpl  extends BaseServiceImpl<${className}Mapper,${className}Entity> implements ${className}Service {
 
     @Autowired
-    private ${className}Dao ${variableClassName}Dao;
+    private ${className}Mapper ${variableClassName}Mapper;
 
     @Override
     public Object pageReq(${className}Req req) {
