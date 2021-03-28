@@ -62,7 +62,10 @@ public class ConvertUtil {
             if (annotation == null || !annotation.Value()) {
                 field.setAccessible(true);
                 try {
-                    returnMap.put(field.getName(), field.get(bean));
+                    Object value = field.get(bean);
+                    if (value!=null){
+                        returnMap.put(field.getName(), value);
+                    }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }

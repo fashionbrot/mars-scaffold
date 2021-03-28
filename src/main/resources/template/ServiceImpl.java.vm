@@ -46,10 +46,10 @@ public class ${className}ServiceImpl  extends BaseServiceImpl<${className}Mapper
         Map<String,Object> map = ConvertUtil.toMap(req);
         List<${className}Entity> listByMap = baseMapper.selectByMap(map);
 
-        return RespVo.success(PageVo.builder()
+        return PageVo.builder()
                 .rows(listByMap)
                 .total(page.getTotal())
-                .build());
+                .build();
     }
 
 }

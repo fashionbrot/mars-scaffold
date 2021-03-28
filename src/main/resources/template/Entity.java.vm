@@ -64,7 +64,6 @@ public class ${className}Entity implements Serializable {
 	@TableField("${column.columnName}")
 	private $column.attrType $column.variableAttrName;
 	#end
-
 #end
 
 
