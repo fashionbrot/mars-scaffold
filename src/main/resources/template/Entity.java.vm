@@ -41,6 +41,7 @@ public class ${className}Entity implements Serializable {
 	#if($column.columnName == 'ID' || $column.columnName == 'id')
 	@ApiModelProperty(value = "$column.comments")
 	@TableId(type = IdType.AUTO)
+	private $column.attrType $column.variableAttrName;
 	#elseif($column.columnName == 'CREATE_ID' || $column.columnName == 'create_id')
 	@ApiModelProperty(value = "$column.comments")
 	@TableField(value="${column.columnName}",fill = FieldFill.INSERT)
